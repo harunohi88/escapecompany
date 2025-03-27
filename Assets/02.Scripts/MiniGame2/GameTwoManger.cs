@@ -19,7 +19,9 @@ namespace MiniGameTWo
         public GameObject[] heartPrefab;
         public GameObject[] goalPrefab;
         public GameObject bombPrefab;
+        public GameObject UIPrefab;
         private bool fuseStarted = false;
+        private bool isGameOver = false;
 
 
         private int currentHealth = 3;
@@ -39,7 +41,7 @@ namespace MiniGameTWo
         void Update()
         {
             timer -= Time.deltaTime;
-            timerText.text = "Time: " + Mathf.Ceil(timer);
+            timerText.text = $"{Mathf.Ceil(timer)}";
 
             if (!fuseStarted && timer < 4f)
             {
@@ -51,6 +53,8 @@ namespace MiniGameTWo
             if (timer <= 0)
             {
                 Debug.Log("실패!");
+                isGameOver = true;
+                UIPrefab.SetActive(false);
                 enabled = false;
             }
         }
@@ -62,6 +66,11 @@ namespace MiniGameTWo
 
         public void RedCleared()
         {
+            if (isGameOver)
+            {
+                return;
+            }
+
             redCount--;
             if (redCount <= 0)
             {
@@ -75,6 +84,8 @@ namespace MiniGameTWo
                 if (successCount >= maxSuccess)
                 {
                     Debug.Log("게임 클리어!");
+                    isGameOver = true;
+                    UIPrefab.SetActive(false);
                     enabled = false;
                 }
                 else
@@ -86,10 +97,17 @@ namespace MiniGameTWo
 
         public void OnwrongClick()
         {
+            if (isGameOver)
+            {
+                return;
+            }
+
             if (currentHealth <= 0)
             {
                 // 이미 체력이 0인 상태에서 잘못 누름 → 즉시 게임 종료 처리
                 Debug.Log("게임 종료: 기회 소진");
+                isGameOver = true;
+                UIPrefab.SetActive(false);
                 enabled = false;
 
                 return;
@@ -106,6 +124,8 @@ namespace MiniGameTWo
                 // 하트 전부 소진 → 게임 종료 처리
                 Debug.Log("하트 0: 게임 종료");
                 enabled = false;
+                isGameOver = true;
+                UIPrefab.SetActive(false);
             }
             else
             {
