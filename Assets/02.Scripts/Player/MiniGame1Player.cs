@@ -5,13 +5,21 @@ namespace DocumentGame
 {
     public class MiniGame1Player : MonoBehaviour
     {
+        public GameObject Shredder;
+        public GameObject Safe;
+        public GameObject Origin;
+
         private Vector3 _direction;
         private bool _status;
         private Document _current;
+        private Vector3 _shredder;
+        private Vector3 _safe;
 
         private void OnEnable()
         {
             LeanTouch.OnFingerSwipe += HandleFingerSwipe;
+            _shredder = Shredder.transform.position - Origin.transform.position;
+            _safe = Safe.transform.position - Origin.transform.position;
         }
 
         private void OnDisable()
@@ -53,11 +61,11 @@ namespace DocumentGame
             {
                 if (swipeDelta.x > 0)
                 {
-                    _direction = Vector3.right;
+                    _direction = _shredder;
                 }
                 else
                 {
-                    _direction = Vector3.left;
+                    _direction = _safe;
                 }
             }
             else
@@ -89,11 +97,15 @@ namespace DocumentGame
         {
             _current = null;
             _status = true;
+            Shredder.SetActive(true);
+            Safe.SetActive(true);
         }
 
         public void GameOver()
         {
             _status = false;
+            Shredder.SetActive(false);
+            Safe.SetActive(false);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DocumentGame
 
         public void Move(Vector3 direction)
         {
-            if (direction == Direction)
+            if (Direction.x * direction.x > 0)
             {
                 DocumentGameManager.Instance.Correct(DefaultScore);
             }
@@ -20,7 +20,7 @@ namespace DocumentGame
                 DocumentGameManager.Instance.Wrong(DefaultScore);
             }
 
-            transform.DOMove(transform.position + direction * 5f, Duration).OnComplete(() => Destroy(gameObject));
+            transform.DOMove(transform.position + direction, Duration).OnComplete(() => Destroy(gameObject));
         }
     }
 }
