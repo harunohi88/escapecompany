@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class PlayerGame2 : MonoBehaviour
 {
-    // ¸ñÇ¥: ÇÃ·¹ÀÌ¾î°¡ ¹Ì´Ï°ÔÀÓ 2¸¦ ÇÃ·¹ÀÌÇÒ ¼ö ÀÖµµ·Ï ÇÔ
-    // GameTwo ÅÂ±×°¡ ´Ş¸° ¿ÀºêÁ§Æ® °¡±îÀÌ °¡¸é Ä«¸Ş¶ó°¡ À§ÂÊÀ¸·Î ÀÌµ¿ÇÏ¸é¼­ ¹Ì´Ï°ÔÀÓ2°¡ È°¼ºÈ­µÈ´Ù.
+    // ëª©í‘œ: í”Œë ˆì´ì–´ê°€ ë¯¸ë‹ˆê²Œì„ 2ë¥¼ í”Œë ˆì´í•  ìˆ˜ ìˆë„ë¡ í•¨
+    // GameTwo íƒœê·¸ê°€ ë‹¬ë¦° ì˜¤ë¸Œì íŠ¸ ê°€ê¹Œì´ ê°€ë©´ ì¹´ë©”ë¼ê°€ ìœ„ìª½ìœ¼ë¡œ ì´ë™í•˜ë©´ì„œ ë¯¸ë‹ˆê²Œì„2ê°€ í™œì„±í™”ëœë‹¤.
     public GameObject miniGame2Root;
     public GameObject joyStickUI;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Ãæµ¹ÁßÀÌ´Ù: " + other.gameObject.name + ", ÅÂ±×: " + other.gameObject.tag);
+        Debug.Log("ì¶©ëŒì¤‘ì´ë‹¤: " + other.gameObject.name + ", íƒœê·¸: " + other.gameObject.tag);
         if (other.gameObject.CompareTag("GameTwo"))
         {
-            Debug.Log("¹Ì´Ï°ÔÀÓ2 ½ÃÀÛ");
+            Debug.Log("ë¯¸ë‹ˆê²Œì„2 ì‹œì‘");
             StartCoroutine(EnterMiniGameTwo());
         }
     }
