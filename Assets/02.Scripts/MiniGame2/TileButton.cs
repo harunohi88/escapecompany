@@ -4,28 +4,35 @@ using UnityEngine.UI;
 
 namespace MiniGameTWo
 {
+    [System.Serializable]
+    public class SpritePair
+    {
+        public Sprite RedSprite;
+        public Sprite WhiteSprite;
+    }
+
     public class TileButton : MonoBehaviour
     {
-        private Button btn;
-        private Image img;
+        private Button _btn;
+        private Image _img;
         public bool isRed = false;
 
-        private GameTwoManager gameManager;
-        public Sprite[] sprites;
+        public GameTwoManager GameManager;
+        //public Sprite[] sprites;
 
         void Awake()
         {
-            btn = GetComponent<Button>();
-            img = GetComponent<Image>();
-            btn.onClick.AddListener(OnClick);
+            _btn = GetComponent<Button>();
+            _img = GetComponent<Image>();
+            _btn.onClick.AddListener(OnClick);
         }
 
-        public void Init(bool red, GameTwoManager manager)
+        public void Init(bool red, GameTwoManager manager, Sprite redSprite, Sprite whiteSprite)
         {
             isRed = red;
             //img.color = red ? Color.red : Color.white;
-            img.sprite = red ? sprites[0] : sprites[1];
-            gameManager = manager;
+            _img.sprite = red ? whiteSprite : redSprite;
+            GameManager = manager;
         }
 
         public void HandleButtonClick()
@@ -35,20 +42,20 @@ namespace MiniGameTWo
 
         void OnClick()
         {
-            btn.interactable = false;
+            _btn.interactable = false;
             if (isRed)
             {
-                img.color = Color.gray;
+                _img.color = Color.gray;
                 // 바운스 효과
                 //transform.DOKill();
                 transform.DOPunchScale(Vector3.one * 0.5f, 0.3f);
-                gameManager.RedCleared();     // 성공 조건 체크
+                GameManager.RedCleared();     // 성공 조건 체크
             }
             else
             {
                 //transform.DOKill();
                 transform.DOPunchScale(Vector3.one * 0.5f, 0.3f);
-                gameManager.OnwrongClick();   // 실패 조건 체크
+                GameManager.OnwrongClick();   // 실패 조건 체크
             }
         }
     }
