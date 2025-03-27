@@ -5,7 +5,7 @@ namespace CreateMap
 {
     public class UI_Game : MonoBehaviour
     {
-        static readonly int SECONDPERMINIUTE = 60;
+        static readonly int SECONDPERMINIUTE = 20;
         public TextMeshProUGUI GlobalTimmer;
 
         int _minute = 50;
