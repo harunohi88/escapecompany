@@ -1,40 +1,42 @@
-﻿using DG.Tweening;
-using System.Collections;
-
-//using static UnityEditor.Rendering.CoreEditorDrawer<TData>;
+﻿using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+
+//using static UnityEditor.Rendering.CoreEditorDrawer<TData>;
 
 namespace MiniGameTWo
 {
     public class GameTwoManager : MonoBehaviour
     {
+        const int maxSuccess = 3;
         public UIMiniTwo ui;
         public TextMeshProUGUI timerText;
         public float gameTime = 10f;
-        private int successCount = 0;
-        private const int maxSuccess = 3;
 
         [Header("체력시스템")]
         public GameObject[] heartPrefab;
         public GameObject[] goalPrefab;
         public GameObject bombPrefab;
         public GameObject UIPrefab;
-        private bool fuseStarted = false;
-        private bool isGameOver = false;
 
 
-        private int currentHealth = 3;
+        int currentHealth = 3;
+        bool fuseStarted;
+        bool isGameOver;
+        int redCount;
+        int successCount;
 
-        private float timer;
-        private int redCount;
+        float timer;
 
         void Start()
         {
             StartNewRound();
+
             //timer = gameTime;
             //ui.InitGame();  // 게임 시작
             bombPrefab.SetActive(false);
+
             //Debug.Log("bomb 끔.");
         }
 
@@ -48,7 +50,7 @@ namespace MiniGameTWo
                 //Debug.Log("폭탄 발동!");
                 bombPrefab.SetActive(true);
                 fuseStarted = true;
-                bombPrefab.GetComponent<Animator>().Play("BombSystem");
+                bombPrefab.GetComponentInChildren<Animator>().Play("BombSystem");
             }
             if (timer <= 0)
             {
@@ -87,8 +89,7 @@ namespace MiniGameTWo
                     isGameOver = true;
                     UIPrefab.SetActive(false);
                     enabled = false;
-                }
-                else
+                } else
                 {
                     StartCoroutine(ResetBoard());
                 }
@@ -115,8 +116,10 @@ namespace MiniGameTWo
 
 
             Debug.Log($"{currentHealth}");
+
             // 하트 애니메이션 (SetTrigger)
             heartPrefab[currentHealth - 1].GetComponent<Animator>().Play("heart");
+
             // 하트 감소
             currentHealth--;
             if (currentHealth <= 0)
@@ -126,8 +129,7 @@ namespace MiniGameTWo
                 enabled = false;
                 isGameOver = true;
                 UIPrefab.SetActive(false);
-            }
-            else
+            } else
             {
                 // 다음판 리셋
                 StartCoroutine(ResetBoard());
@@ -198,4 +200,3 @@ namespace MiniGameTWo
         }
     }
 }
-
