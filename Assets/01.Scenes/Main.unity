@@ -1902,7 +1902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6035661962433912116, guid: 9b540e64f266285478c5a3386e8a409e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6531654019083973284, guid: 9b540e64f266285478c5a3386e8a409e, type: 3}
       propertyPath: m_Camera
@@ -2926,7 +2926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1299081490
 Transform:
   m_ObjectHideFlags: 0
@@ -3382,8 +3382,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 89f935015cc98724a862a586326fdf21, type: 3}
-  m_Resource: {fileID: 8300000, guid: 89f935015cc98724a862a586326fdf21, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b322e45fe083c2c448d2a1fe4e67492f, type: 3}
+  m_Resource: {fileID: 8300000, guid: b322e45fe083c2c448d2a1fe4e67492f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
