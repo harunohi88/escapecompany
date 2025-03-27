@@ -11,6 +11,7 @@ namespace MiniGameTWo
         public bool isRed = false;
 
         private GameTwoManager gameManager;
+        public Sprite[] sprites;
 
         void Awake()
         {
@@ -22,7 +23,8 @@ namespace MiniGameTWo
         public void Init(bool red, GameTwoManager manager)
         {
             isRed = red;
-            img.color = red ? Color.red : Color.white;
+            //img.color = red ? Color.red : Color.white;
+            img.sprite = red ? sprites[0] : sprites[1];
             gameManager = manager;
         }
 
