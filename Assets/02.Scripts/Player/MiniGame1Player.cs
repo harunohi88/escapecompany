@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DocumentGame
 {
-    public class Player : MonoBehaviour
+    public class MiniGame1Player : MonoBehaviour
     {
         private Vector3 _direction;
         private bool _status;

@@ -17,7 +17,7 @@ namespace DocumentGame
 
         public float TimeLimit;
         public float FeverTime;
-        public Player Player;
+        public MiniGame1Player Player;
         public List<Document> DocumentPrefabList;
         public int DisplayDocumentCount;
         public List<DisplaySlot> DisplaySlot;
@@ -73,7 +73,7 @@ namespace DocumentGame
 
         public void NewGame()
         {
-            // ÃßÈÄ¿¡ ÆÄÀÏ¿¡¼­ Stage Á¤º¸¸¦ ÀÐ¾î¿Ã ¼ö ÀÖµµ·Ï ¼öÁ¤
+            // ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ Stage ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             GenerateQueue(Stage);
             InitDisplay();
             GameStart();
@@ -96,7 +96,7 @@ namespace DocumentGame
             _maxCombo = 0;
             _feverGauge = 0;
             _status = true;
-            _fever = false;  // ÇÔ¼ö·Î »©ÀÚ
+            _fever = false;  // ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             Player.GameStart();
         }
