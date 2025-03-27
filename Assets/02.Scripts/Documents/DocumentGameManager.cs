@@ -1,15 +1,24 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum DocumentType
+{
+    Down,
+    Left,
+    Right
+}
+
 public class DocumentGameManager : MonoBehaviour
 {
     public static DocumentGameManager Instance;
 
-    public float PlayTime;
+    public float TimeLimit;
+    public Player Player;
     public List<Document> DocumentPrefabList;
     public Queue<Document> DocumentQueue = new Queue<Document>();
     public string Stage = "LRDDDRRLLLDDRRDRDDLLLLDDDDDRRRDDRDLRDLD";
 
+    private bool _status = false;
     private int _totalScore = 0;
     private int _combo = 0;
     private float _time = 0;
@@ -29,12 +38,25 @@ public class DocumentGameManager : MonoBehaviour
 
     public void NewGame()
     {
-        _time = 0;
-        _combo = 0;
-        _totalScore = 0;
 
         // 추후에 파일에서 Stage 정보를 읽어올 수 있도록 수정
         GenerateQueue(Stage);
+        GameStart();
+    }
+
+    public void GameStart()
+    {
+        _time = 0;
+        _combo = 0;
+        _totalScore = 0;
+        _status = true;
+
+        Player.GameStart();
+    }
+
+    public void GameOver()
+    {
+        Player.GameOver();
     }
 
     public void AddScore(int score)
@@ -42,22 +64,55 @@ public class DocumentGameManager : MonoBehaviour
         this._totalScore += score;
     }
 
+    public void AddCombo()
+    {
+        _combo++;
+    }
+
+    public void ResetCombo()
+    {
+        _combo = 0;
+    }
+
     private void GenerateQueue(string stage)
     {
+        Document document = null;
+
         foreach (char type in stage)
         {
             switch (type)
             {
                 case 'D':
-                    DocumentQueue.Enqueue(Instantiate(DocumentPrefabList[0]));
+                    document = Instantiate(DocumentPrefabList[(int)DocumentType.Down]);
                     break;
                 case 'L':
-                    DocumentQueue.Enqueue(Instantiate(DocumentPrefabList[1]));
+                    document = Instantiate(DocumentPrefabList[(int)DocumentType.Left]);
                     break;
                 case 'R':
-                    DocumentQueue.Enqueue(Instantiate(DocumentPrefabList[2]));
+                    document = Instantiate(DocumentPrefabList[(int)DocumentType.Right]);
                     break;
             }
+            document.gameObject.SetActive(false);
+            DocumentQueue.Enqueue(document);
         }
     }
+
+    public Document AskDocument()
+    {
+        Document document = null;
+
+        Debug.Log(DocumentQueue.Count);
+        if (DocumentQueue.Count > 0)
+        {
+            document = DocumentQueue.Dequeue();
+            document.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameOver();
+        }
+        return document;
+    }
+
+   
 }
