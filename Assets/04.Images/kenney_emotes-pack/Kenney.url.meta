@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/TextMesh Pro.meta
+guid: a027c4e4128ff954e9ee11b7f98e3853
+folderAsset: yes
+========
 guid: 39c91a19eeb8e914cbfd09a32cf87cac
+>>>>>>>> origin/CreateMap:Assets/04.Images/kenney_emotes-pack/Kenney.url.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
