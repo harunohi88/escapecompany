@@ -1,60 +1,64 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace DocumentGame
 {
-    
-
-    private Vector3 _direction;
-    private bool _status;
-    private Document _current;
-
-    void Update()
+    public class Player : MonoBehaviour
     {
-        if (!_status)
+        private Vector3 _direction;
+        private bool _status;
+        private Document _current;
+
+        void Update()
         {
-            return;
+            if (!_status)
+            {
+                return;
+            }
+
+            if (_current == null)
+            {
+                _current = DocumentGameManager.Instance.GetDocument();
+                return;
+            }
+
+            GetKeycode();
+
+            if (_direction == Vector3.zero)
+            {
+                return;
+            }
+
+            _current.Move(_direction);
+            _current = null;
+            _direction = Vector3.zero;
+            DocumentGameManager.Instance.Process();
         }
 
-        if (_current == null)
+        private void GetKeycode()
         {
-            _current = DocumentGameManager.Instance.AskDocument();
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                _direction = Vector3.down;
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                _direction = Vector3.left;
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                _direction = Vector3.right;
+            }
         }
 
-        GetKeycode();
-        if (_direction == Vector3.zero)
+        public void GameStart()
         {
-            return;
+            _current = null;
+            _status = true;
         }
 
-        _current.Move(_direction);
-        _current = DocumentGameManager.Instance.AskDocument();
-        _direction = Vector3.zero;
-    }
-
-    private void GetKeycode()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
+        public void GameOver()
         {
-            _direction = Vector3.down;
+            _status = false;
         }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            _direction = Vector3.left;
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            _direction = Vector3.right;
-        }
-    }
-
-    public void GameStart()
-    {
-        _current = null;
-        _status = true;
-    }
-
-    public void GameOver()
-    {
-        _status = false;
     }
 }

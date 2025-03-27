@@ -1,24 +1,26 @@
 using UnityEngine;
 using DG.Tweening;
 
-
-public class Document : MonoBehaviour
+namespace DocumentGame
 {
-    public int DefaultScore;
-    public Vector3 Direction;
-    public float Duration;
-
-    public void Move(Vector3 direction)
+    public class Document : MonoBehaviour
     {
-        if (direction == Direction)
+        public int DefaultScore;
+        public Vector3 Direction;
+        public float Duration;
+
+        public void Move(Vector3 direction)
         {
-            DocumentGameManager.Instance.AddScore(DefaultScore);
-        }
-        else
-        {
-            DocumentGameManager.Instance.ResetCombo();
-        }
+            if (direction == Direction)
+            {
+                DocumentGameManager.Instance.Correct(DefaultScore);
+            }
+            else
+            {
+                DocumentGameManager.Instance.Wrong(DefaultScore);
+            }
 
             transform.DOMove(transform.position + direction * 5f, Duration).OnComplete(() => Destroy(gameObject));
+        }
     }
 }

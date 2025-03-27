@@ -1,9 +1,13 @@
 using UnityEngine;
 
-public class StartButton : MonoBehaviour
+
+namespace DocumentGame
 {
-    public void OnClickGameStart()
+    public class StartButton : MonoBehaviour
     {
-        DocumentGameManager.Instance.NewGame();
+        public void OnClickGameStart()
+        {
+            DocumentGameManager.Instance.NewGame();
+        }
     }
 }
