@@ -1,4 +1,5 @@
 using UnityEngine;
+using Lean.Touch;
 
 namespace DocumentGame
 {
@@ -7,6 +8,16 @@ namespace DocumentGame
         private Vector3 _direction;
         private bool _status;
         private Document _current;
+
+        private void OnEnable()
+        {
+            LeanTouch.OnFingerSwipe += HandleFingerSwipe;
+        }
+
+        private void OnDisable()
+        {
+            LeanTouch.OnFingerSwipe -= HandleFingerSwipe;
+        }
 
         void Update()
         {
@@ -21,7 +32,7 @@ namespace DocumentGame
                 return;
             }
 
-            GetKeycode();
+            //GetKeycode();
 
             if (_direction == Vector3.zero)
             {
@@ -32,6 +43,30 @@ namespace DocumentGame
             _current = null;
             _direction = Vector3.zero;
             DocumentGameManager.Instance.Process();
+        }
+
+        private void HandleFingerSwipe(LeanFinger finger)
+        {
+            Vector2 swipeDelta = finger.SwipeScreenDelta;
+
+            if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
+            {
+                if (swipeDelta.x > 0)
+                {
+                    _direction = Vector3.right;
+                }
+                else
+                {
+                    _direction = Vector3.left;
+                }
+            }
+            else
+            {
+                if (swipeDelta.y < 0)
+                {
+                    _direction = Vector3.down;
+                }
+            }
         }
 
         private void GetKeycode()
