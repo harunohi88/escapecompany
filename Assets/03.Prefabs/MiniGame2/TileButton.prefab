@@ -147,6 +147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRed: 0
+  sprites:
+  - {fileID: -7728606955620985144, guid: 3469c01b6bd050948812c866d5975865, type: 3}
+  - {fileID: 4973233953454944060, guid: 08077bbc015e45f4cab5a11a9249a469, type: 3}
 --- !u!1 &6584394908348583148
 GameObject:
   m_ObjectHideFlags: 0
