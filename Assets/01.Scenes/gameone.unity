@@ -880,7 +880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e5171c8ad892e4e957c08963f64553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeLimit: 20
+  TimeLimit: 60
   Player: {fileID: 729019123}
   DocumentPrefabList:
   - {fileID: 6043444019606789631, guid: a8a9cf45434b8a74da4be77807b0b5be, type: 3}

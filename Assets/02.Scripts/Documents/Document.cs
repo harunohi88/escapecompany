@@ -14,7 +14,11 @@ public class Document : MonoBehaviour
         {
             DocumentGameManager.Instance.AddScore(DefaultScore);
         }
+        else
+        {
+            DocumentGameManager.Instance.ResetCombo();
+        }
 
-        transform.DOMove(transform.position + direction * 5f, Duration).OnComplete(() => Destroy(gameObject));
+            transform.DOMove(transform.position + direction * 5f, Duration).OnComplete(() => Destroy(gameObject));
     }
 }

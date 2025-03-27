@@ -33,34 +33,28 @@ public class Player : MonoBehaviour
 
     private void GetKeycode()
     {
-        Debug.Log("GetKeycode");
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log("S");
             _direction = Vector3.down;
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("A");
             _direction = Vector3.left;
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            Debug.Log("D");
             _direction = Vector3.right;
         }
     }
 
     public void GameStart()
     {
-        Debug.Log("GameStart");
         _current = null;
         _status = true;
     }
 
     public void GameOver()
     {
-        Debug.Log("GameOver");
         _status = false;
     }
 }

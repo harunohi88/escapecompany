@@ -19,8 +19,11 @@ public class DocumentGameManager : MonoBehaviour
     public string Stage = "LRDDDRRLLLDDRRDRDDLLLLDDDDDRRRDDRDLRDLD";
 
     private bool _status = false;
+    private bool _fever = false;
     private int _totalScore = 0;
+    private int _maxCombo = 0;
     private int _combo = 0;
+    private int _feverGauge = 0;
     private float _time = 0;
 
     void Awake()
@@ -33,6 +36,19 @@ public class DocumentGameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        if (!_status)
+        {
+            return;
+        }
+        _time += Time.deltaTime;
+        if (_time >= TimeLimit)
+        {
+            GameOver();
         }
     }
 
@@ -49,7 +65,10 @@ public class DocumentGameManager : MonoBehaviour
         _time = 0;
         _combo = 0;
         _totalScore = 0;
+        _maxCombo = 0;
+        _feverGauge = 0;
         _status = true;
+        _fever = false;  // ÇÔ¼ö·Î »©ÀÚ
 
         Player.GameStart();
     }
@@ -57,20 +76,27 @@ public class DocumentGameManager : MonoBehaviour
     public void GameOver()
     {
         Player.GameOver();
+        _status = false;
+        _maxCombo = Mathf.Max(_maxCombo, _combo);
+        ShowResult();
+    }
+
+    private void ShowResult()
+    {
+        Debug.Log($"Total Score : {_totalScore}");
+        Debug.Log($"Max Combo : {_maxCombo}");
+        Debug.Log($"Play Time : {_time.ToString("F2")}");
     }
 
     public void AddScore(int score)
     {
-        this._totalScore += score;
-    }
-
-    public void AddCombo()
-    {
+        this._totalScore += score * ((_combo / 10) + 1);
         _combo++;
     }
 
     public void ResetCombo()
     {
+        _maxCombo = Mathf.Max(_maxCombo, _combo);
         _combo = 0;
     }
 
@@ -101,7 +127,6 @@ public class DocumentGameManager : MonoBehaviour
     {
         Document document = null;
 
-        Debug.Log(DocumentQueue.Count);
         if (DocumentQueue.Count > 0)
         {
             document = DocumentQueue.Dequeue();
