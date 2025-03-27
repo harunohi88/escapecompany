@@ -84,6 +84,7 @@ namespace DocumentGame
             transform.parent.transform.position = newPosition;
             GenerateQueue(Stage);
             InitDisplay();
+            UI_MiniGame1.Instance.UIActive();
             GameStart();
             Joystick.SetActive(false);
         }
@@ -121,6 +122,7 @@ namespace DocumentGame
             _documentQueue.Clear();
             _displayDocumentList.Clear();
             _documentQueue.Clear();
+            UI_MiniGame1.Instance.UIInactive();
         }
 
         private void ShowResult()
@@ -139,6 +141,7 @@ namespace DocumentGame
             }
             this._totalScore += score * ((_combo / 10) + 1);
             ++_combo;
+            UI_MiniGame1.Instance.ComboRefresh(_combo);
             ++_feverGauge;
             if (_feverGauge >= 10) // magic number
             {
@@ -156,6 +159,7 @@ namespace DocumentGame
             }
             _maxCombo = Mathf.Max(_maxCombo, _combo);
             _combo = 0;
+            UI_MiniGame1.Instance.ComboRefresh(_combo);
             _feverGauge = Mathf.Max(0, _feverGauge - 5); // magic number
         }
 
@@ -163,6 +167,7 @@ namespace DocumentGame
         {
             this._totalScore += score * ((_combo / 10) + 1); // magic number
             ++_combo;
+            UI_MiniGame1.Instance.ComboRefresh(_combo);
         }
 
         private void GenerateQueue(string stage)
