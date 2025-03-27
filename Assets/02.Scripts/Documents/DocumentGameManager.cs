@@ -13,6 +13,7 @@ public class DocumentGameManager : MonoBehaviour
     public static DocumentGameManager Instance;
 
     public float TimeLimit;
+    public float FeverTime;
     public Player Player;
     public List<Document> DocumentPrefabList;
     public Queue<Document> DocumentQueue = new Queue<Document>();
@@ -24,7 +25,8 @@ public class DocumentGameManager : MonoBehaviour
     private int _maxCombo = 0;
     private int _combo = 0;
     private int _feverGauge = 0;
-    private float _time = 0;
+    private float _timer = 0;
+    private float _feverTimer = 0;
 
     void Awake()
     {
@@ -45,8 +47,8 @@ public class DocumentGameManager : MonoBehaviour
         {
             return;
         }
-        _time += Time.deltaTime;
-        if (_time >= TimeLimit)
+        _timer += Time.deltaTime;
+        if (_timer >= TimeLimit)
         {
             GameOver();
         }
@@ -62,7 +64,7 @@ public class DocumentGameManager : MonoBehaviour
 
     public void GameStart()
     {
-        _time = 0;
+        _timer = 0;
         _combo = 0;
         _totalScore = 0;
         _maxCombo = 0;
@@ -85,7 +87,7 @@ public class DocumentGameManager : MonoBehaviour
     {
         Debug.Log($"Total Score : {_totalScore}");
         Debug.Log($"Max Combo : {_maxCombo}");
-        Debug.Log($"Play Time : {_time.ToString("F2")}");
+        Debug.Log($"Play Time : {_timer.ToString("F2")}");
     }
 
     public void AddScore(int score)
