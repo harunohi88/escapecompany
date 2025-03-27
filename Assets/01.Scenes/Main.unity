@@ -174,6 +174,7 @@ GameObject:
   - component: {fileID: 70642831}
   - component: {fileID: 70642833}
   - component: {fileID: 70642832}
+  - component: {fileID: 70642834}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -299,6 +300,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70642830}
   m_CullTransparentMesh: 1
+--- !u!114 &70642834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70642830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a48898304036f7459b50a58fb769b96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beatScale: {x: 1.1, y: 1.1, z: 1}
+  beatDuration: 1
 --- !u!1 &96250775
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +572,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5645794162803844116, guid: 6c35c23f31fa140469ab5ea2e3ddcf3e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1266052498}
   m_SourcePrefab: {fileID: 100100000, guid: 6c35c23f31fa140469ab5ea2e3ddcf3e, type: 3}
 --- !u!1001 &292576113
 PrefabInstance:
@@ -2880,6 +2898,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5645794162803844116, guid: 6c35c23f31fa140469ab5ea2e3ddcf3e, type: 3}
   m_PrefabInstance: {fileID: 288832997}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1266052498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266052497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98bf370682dc7b46a2a76de860182a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartButton: {fileID: 1387627186}
 --- !u!1 &1299081489
 GameObject:
   m_ObjectHideFlags: 0
@@ -3011,7 +3042,19 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1387627186}
         m_TargetAssemblyTypeName: DocumentGame.StartButton, Assembly-CSharp
-        m_MethodName: OnClickGameStart
+        m_MethodName: OnClickMiniGame1Start
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1387627186}
+        m_TargetAssemblyTypeName: DocumentGame.StartButton, Assembly-CSharp
+        m_MethodName: OnClickMiniGame2Start
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3071,6 +3114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a9b03c1a2e6e04a88fc78c6edad65d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGame2Root: {fileID: 1299081489}
+  joyStickUI: {fileID: 1777857583}
+  MiniGame1: 0
+  MiniGame2: 0
 --- !u!1001 &1562652887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3326,6 +3373,7 @@ GameObject:
   - component: {fileID: 1902215769}
   - component: {fileID: 1902215768}
   - component: {fileID: 1902215767}
+  - component: {fileID: 1902215771}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3418,6 +3466,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1902215771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902215766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f4255df3ce5884aac49f864b679681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalTimmer: {fileID: 70642832}
 --- !u!1 &2024027294
 GameObject:
   m_ObjectHideFlags: 0
@@ -3531,7 +3592,7 @@ GameObject:
   - component: {fileID: 2076214506}
   m_Layer: 7
   m_Name: Game1
-  m_TagString: Untagged
+  m_TagString: GameOne
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
