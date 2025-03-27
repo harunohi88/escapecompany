@@ -13,7 +13,7 @@ namespace DocumentGame
                 return;
             }
             document.transform.position = transform.position;
-            document.transform.localScale *= Magnitude;
+            document.transform.localScale = Vector3.one * Magnitude;
             document.gameObject.SetActive(true);
         }
     }

@@ -25,7 +25,7 @@ namespace DocumentGame
         public List<Document> DocumentPrefabList;
         public int DisplayDocumentCount;
         public List<DisplaySlot> DisplaySlot;
-        public string Stage = "LRDDDRRLLLDDRRDRDDLLLLDDDDDRRRDDRDLRDLD";
+        public string Stage = "LRLLRRRRLLLLRRLRRRLLLRRLRRRRLLLRLLLLLRRRRLRLLLRRLRLRRRL";
 
         private Queue<Document> _documentQueue = new Queue<Document>();
         private List<Document> _displayDocumentList = new List<Document>();
@@ -76,8 +76,12 @@ namespace DocumentGame
 
         public void NewGame()
         {
+            if (_status)
+            {
+                return;
+            }
             Vector3 newPosition = new Vector3(Camera.transform.position.x, Camera.transform.position.y, transform.position.z);
-            transform.position = newPosition;
+            transform.parent.transform.position = newPosition;
             GenerateQueue(Stage);
             InitDisplay();
             GameStart();
