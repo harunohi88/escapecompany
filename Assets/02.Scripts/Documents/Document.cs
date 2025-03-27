@@ -1,22 +1,20 @@
 using UnityEngine;
+using DG.Tweening;
 
-public enum Direction
-{
-    Left,
-    Right,
-    Down
-}
 
 public class Document : MonoBehaviour
 {
-    public Direction Direction;
-    public int Score;
+    public int DefaultScore;
+    public Vector3 Direction;
+    public float Duration;
 
-    public void Move(Direction direction)
+    public void Move(Vector3 direction)
     {
         if (direction == Direction)
         {
-            DocumentManager.Instance.AddScore(Score);
+            DocumentGameManager.Instance.AddScore(DefaultScore);
         }
+
+        transform.DOMove(transform.position + direction, Duration);
     }
 }
