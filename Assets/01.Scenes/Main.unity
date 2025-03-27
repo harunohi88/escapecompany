@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 70642831}
   - component: {fileID: 70642833}
   - component: {fileID: 70642832}
+  - component: {fileID: 70642834}
   m_Layer: 5
   m_Name: GlobalTimmer
   m_TagString: Untagged
@@ -290,7 +291,7 @@ RectTransform:
   m_GameObject: {fileID: 70642830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1902215770}
@@ -320,7 +321,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 05:50
+  m_text: '05 : 50'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cd6904ee0544a94ea948eb6ae719c99, type: 2}
   m_sharedMaterial: {fileID: 7883626003443081615, guid: 5cd6904ee0544a94ea948eb6ae719c99, type: 2}
@@ -399,6 +400,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70642830}
   m_CullTransparentMesh: 1
+--- !u!114 &70642834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70642830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a48898304036f7459b50a58fb769b96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beatScale: {x: 1.1, y: 1.1, z: 1}
+  beatDuration: 1
 --- !u!1 &96250775
 GameObject:
   m_ObjectHideFlags: 0
