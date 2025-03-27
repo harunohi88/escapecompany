@@ -43,5 +43,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: OutDoor
+    uniqueID: 69103239
+    locked: 0
+  - name: UI
+    uniqueID: 800067473
+    locked: 0
   m_RenderingLayers:
   - Default
