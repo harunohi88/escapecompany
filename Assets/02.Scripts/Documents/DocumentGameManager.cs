@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using CreateMap;
 
 public enum DocumentType
 {
@@ -15,6 +16,9 @@ namespace DocumentGame
     {
         public static DocumentGameManager Instance;
 
+        public GameObject MainPlayer;
+        public GameObject Camera;
+        public GameObject Joystick;
         public float TimeLimit;
         public float FeverTime;
         public MiniGame1Player Player;
@@ -39,7 +43,6 @@ namespace DocumentGame
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
             }
             else
             {
@@ -73,10 +76,12 @@ namespace DocumentGame
 
         public void NewGame()
         {
-            // ���Ŀ� ���Ͽ��� Stage ������ �о�� �� �ֵ��� ����
+            Vector3 newPosition = new Vector3(Camera.transform.position.x, Camera.transform.position.y, transform.position.z);
+            transform.position = newPosition;
             GenerateQueue(Stage);
             InitDisplay();
             GameStart();
+            Joystick.SetActive(false);
         }
 
         public void InitDisplay()
@@ -96,7 +101,7 @@ namespace DocumentGame
             _maxCombo = 0;
             _feverGauge = 0;
             _status = true;
-            _fever = false;  // �Լ��� ����
+            _fever = false;
 
             Player.GameStart();
         }
@@ -107,6 +112,11 @@ namespace DocumentGame
             _status = false;
             _maxCombo = Mathf.Max(_maxCombo, _combo);
             ShowResult();
+            Joystick.SetActive(true);
+            MainPlayer.GetComponent<CreateMap.Player>().Stop();
+            _documentQueue.Clear();
+            _displayDocumentList.Clear();
+            _documentQueue.Clear();
         }
 
         private void ShowResult()

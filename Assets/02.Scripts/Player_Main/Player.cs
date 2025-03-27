@@ -59,5 +59,11 @@ namespace CreateMap
             _animator.SetBool("Play", true);
             _isPlay = true;
         }
+
+        public void Stop()
+        {
+            _animator.SetBool("Play", false);
+            _isPlay = false;
+        }
     }
 }
