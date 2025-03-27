@@ -1,20 +1,24 @@
 using UnityEngine;
 
-public class UIMiniTwo : MonoBehaviour
+namespace MiniGameTWo
 {
-    public GameObject tilePrefab;
-    public Transform gridParent;
-    public GameTwoManager gameManager;
-
-    public void InitGame()
+    public class UIMiniTwo : MonoBehaviour
     {
-        for (int i = 0; i < 16; i++)
+        public GameObject tilePrefab;
+        public Transform gridParent;
+        public GameTwoManager gameManager;
+
+        public void InitGame()
         {
-            GameObject tile = Instantiate(tilePrefab, gridParent);
-            TileButton tileBtn = tile.GetComponent<TileButton>();
-            bool isRed = Random.value < 0.5f;
-            tileBtn.Init(isRed, gameManager);
-            gameManager.RegisterTile(isRed);
+            for (int i = 0; i < 16; i++)
+            {
+                GameObject tile = Instantiate(tilePrefab, gridParent);
+                TileButton tileBtn = tile.GetComponent<TileButton>();
+                bool isRed = Random.value < 0.5f;
+                tileBtn.Init(isRed, gameManager);
+                gameManager.RegisterTile(isRed);
+            }
         }
     }
 }
+
