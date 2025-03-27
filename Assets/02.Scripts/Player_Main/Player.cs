@@ -56,14 +56,19 @@ namespace CreateMap
 
         public void Play()
         {
-            _animator.SetBool("Play", true);
-            _isPlay = true;
+            if (GetComponent<PlayerGame>().StartButton.IsAnyGame())
+            {
+                _animator.SetBool("Play", true);
+                _isPlay = true;
+                Joystick.gameObject.SetActive(false);
+            }
         }
 
         public void Stop()
         {
             _animator.SetBool("Play", false);
             _isPlay = false;
+            Joystick.gameObject.SetActive(true);
         }
     }
 }
