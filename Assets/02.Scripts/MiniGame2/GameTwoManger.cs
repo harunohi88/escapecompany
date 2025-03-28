@@ -1,6 +1,7 @@
 ﻿using CreateMap;
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace MiniGameTWo
         const int maxSuccess = 3;
         public UIMiniTwo UIMiniTwo;
         public TextMeshProUGUI TimerText;
+        public GameObject TimerIcon;
         public float GameTime = 10f;
 
 
@@ -23,6 +25,10 @@ namespace MiniGameTWo
         public GameObject[] GoalPrefab;
         public GameObject BombPrefab;
         public GameObject UIPrefab;
+        private Vector3 _originalPos; // 타이머 텍스트 위치 저장용
+        public TileButton TileButton;
+
+        public AudioSource _audioSource;
 
 
         int currentHealth = 3;
@@ -33,8 +39,11 @@ namespace MiniGameTWo
 
         float timer;
 
+        public List<GameObject> VFXs;
+
         void Start()
         {
+            _originalPos = TimerText.transform.localPosition;
             StartNewRound();
 
             //timer = GameTime;
@@ -42,6 +51,9 @@ namespace MiniGameTWo
             BombPrefab.SetActive(false);
             player = GameObject.Find("Player").GetComponent<Player>();
             //Debug.Log("bomb 끔.");
+
+            // 게임 시작하자마자 시계 아이콘 반짝임 연출 추가
+            TimerIcon.transform.DOScale(1.2f, 0.5f).SetLoops(-1, LoopType.Yoyo);
         }
 
         void Update()
@@ -49,17 +61,50 @@ namespace MiniGameTWo
             timer -= Time.deltaTime;
             TimerText.text = $"{Mathf.Ceil(timer)}";
 
+
+            // 제한시간에 가까이갈수록 타이머텍스트 색상 변경
+            float timeRatio = timer / GameTime;
+
+            if (timeRatio > 0.6f)
+            {
+                TimerText.color = Color.white;
+            }
+            else if (timeRatio > 0.4f)
+            {
+                TimerText.color = Color.yellow;
+            }
+            else if (timeRatio > 0.2f)
+            {
+                TimerText.color = new Color(1f, 0.5f, 0f);
+            }
+            else
+            {
+                TimerText.color = Color.red;
+            }
+
+
             if (!fuseStarted && timer < 5f)
             {
                 //Debug.Log("폭탄 발동!");
                 BombPrefab.SetActive(true);
                 fuseStarted = true;
-                BombPrefab.GetComponentInChildren<Animator>().Play("BombSystem");
+                //BombPrefab.GetComponentInChildren<Animator>().Play("BombSystem");  //// bomprefab 합치고 작업해!
+
+                // 시계 아이콘 반짝임 연출 추가
+                TimerIcon.transform.DOScale(1.2f, 0.3f).SetLoops(-1, LoopType.Yoyo);
+
+                // 시간 텍스트 연출 추가
+                TimerText.transform.DOScale(1.2f, 0.3f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+                TimerText.transform.DOShakePosition(0.3f, 10f, 10, 90f, false, true).SetLoops(-1, LoopType.Restart);
+
+
             }
             if (timer <= 0)
             {
                 Debug.Log("실패!");
                 isGameOver = true;
+
+                ResetTimerEffects(); // 게임 종료 직전에 이펙트 처리
                 UIPrefab.SetActive(false);
                 player.Stop();
                 enabled = false;
@@ -69,6 +114,16 @@ namespace MiniGameTWo
         public void RegisterTile(bool isRed)
         {
             if (isRed) redCount++;
+        }
+
+        public void RegisterVFX(GameObject vfx)
+        {
+            VFXs.Add(vfx);
+        }
+
+        void UnRegisterVFX()
+        {
+            VFXs.Clear();
         }
 
         public void RedCleared()
@@ -118,7 +173,11 @@ namespace MiniGameTWo
                 UIPrefab.SetActive(false);
                 player.Stop();
                 enabled = false;
-
+                foreach (GameObject vfx in VFXs)
+                {
+                    Destroy(vfx);
+                }
+                UnRegisterVFX();
                 return;
             }
 
@@ -138,25 +197,36 @@ namespace MiniGameTWo
                 isGameOver = true;
                 UIPrefab.SetActive(false);
                 player.Stop();
+                foreach (GameObject vfx in VFXs)
+                {
+                    Destroy(vfx);
+                }
+                UnRegisterVFX();
             }
             else
             {
                 // 다음판 리셋
+                _audioSource.Play();
                 StartCoroutine(ResetBoard());
+
             }
         }
         IEnumerator ResetBoard()
         {
+
+            // 타이머 이펙트 초기화
+            ResetTimerEffects();
+
             // 타일 무너짐 애니메이션
             foreach (Transform tile in UIMiniTwo.GridParent)
             {
-                Vector3 randomOffset = new Vector3(
-                    Random.Range(-200f, 200f),
-                    Random.Range(-300f, -100f),
-                    0f
-                );
+                //Vector3 randomOffset = new Vector3(
+                //    Random.Range(-200f, 200f),
+                //    Random.Range(-300f, -100f),
+                //    0f
+                //);
 
-                tile.DOLocalMove(tile.localPosition + randomOffset, 0.4f).SetEase(Ease.InBack);
+                //tile.DOLocalMove(tile.localPosition + randomOffset, 0.4f).SetEase(Ease.InBack);
                 tile.DORotate(new Vector3(0, 0, Random.Range(-180f, 180f)), 0.4f);
                 tile.DOScale(0f, 0.4f);
             }
@@ -172,16 +242,27 @@ namespace MiniGameTWo
 
             yield return new WaitForSeconds(0.2f);
 
+            foreach (GameObject vfx in VFXs)
+            {
+                Destroy(vfx);
+            }
+            UnRegisterVFX();
+
             StartNewRound();
         }
 
         void StartNewRound()
         {
+
             redCount = 0;
             timer = GameTime;
+
+            fuseStarted = false; // 시계 아이콘 리셋
             ResetHearts();
             ResetGoals();
             UIMiniTwo.InitGame();
+
+            TimerIcon.transform.DOScale(1.2f, 0.3f).SetLoops(-1, LoopType.Yoyo);
         }
 
         void ResetHearts()
@@ -209,5 +290,23 @@ namespace MiniGameTWo
                 GoalPrefab[i].SetActive(true);
             }
         }
+
+        void TimerEffect()
+        {
+            TimerText.transform.DOScale(1.2f, 0.3f).SetLoops(-1, LoopType.Yoyo);
+            TimerText.transform.DOShakePosition(0.3f, 10f, 10, 90f, false, true).SetLoops(-1, LoopType.Restart);
+            TimerIcon.transform.DOScale(1.2f, 0.3f).SetLoops(-1, LoopType.Yoyo);
+        }
+
+        void ResetTimerEffects()
+        {
+            TimerText.transform.DOKill();
+            TimerText.transform.localScale = Vector3.one;
+            TimerText.transform.localPosition = _originalPos;
+
+            TimerIcon.transform.DOKill();
+            TimerIcon.transform.localScale = Vector3.one;
+        }
+
     }
 }
