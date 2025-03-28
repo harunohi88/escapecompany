@@ -1,3 +1,4 @@
+using Com.LuisPedroFonseca.ProCamera2D;
 using DocumentGame;
 using UnityEngine;
 
@@ -79,10 +80,14 @@ namespace CreateMap
         {
             Player _player = player.GetComponent<Player>();
             StartButton startButton = player.GetComponent<PlayerGame>().StartButton;
+
             if (startButton.IsAnyGame()) return;
             if (_player.StunItem > 0)
             {
                 _player.UseStunItem();
+
+                ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[0]);
+
                 IsStun = true;
             }
         }
