@@ -5,7 +5,7 @@ namespace CreateMap
 {
     public class UI_Game : MonoBehaviour
     {
-        public static readonly int SECONDS_PER_MINUTE = 1;
+        public static readonly int SECONDS_PER_MINUTE = 8;
         public TextMeshProUGUI GlobalTimer;
 
         float _second;
