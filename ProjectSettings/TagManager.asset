@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GameTwo
   - GameOne
+  - Boss
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -15,9 +17,9 @@ TagManager:
   - UI
   - OutDoor
   - Object
-  - 
-  - 
-  - 
+  - Player
+  - Wall
+  - Boss
   - 
   - 
   - 
