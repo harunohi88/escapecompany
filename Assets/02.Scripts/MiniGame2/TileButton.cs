@@ -31,6 +31,7 @@ namespace MiniGameTWo
         {
             isRed = red;
             //img.color = red ? Color.red : Color.white;
+            Debug.Log($"{_img == null}");
             _img.sprite = red ? whiteSprite : redSprite;
             GameManager = manager;
         }
