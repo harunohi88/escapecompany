@@ -1,3 +1,4 @@
+using MiniGameTWo;
 using UnityEngine;
 
 namespace DocumentGame
@@ -5,7 +6,7 @@ namespace DocumentGame
     public class StartButton : MonoBehaviour
     {
         public GameObject miniGame2Root;
-
+        public GameTwoManager miniGame2Manager;
 
         public bool MiniGame1;
         public bool MiniGame2;
@@ -25,6 +26,7 @@ namespace DocumentGame
         void EnterMiniGameTwo()
         {
             miniGame2Root.SetActive(true);
+            miniGame2Manager.InitGame();
         }
 
         public bool IsAnyGame()

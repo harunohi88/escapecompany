@@ -8,6 +8,7 @@ TagManager:
   - GameOne
   - Boss
   - Wall
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -56,6 +57,9 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 800067473
+    locked: 0
+  - name: EndGame
+    uniqueID: 2056367361
     locked: 0
   m_RenderingLayers:
   - Default

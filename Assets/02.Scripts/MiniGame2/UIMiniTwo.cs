@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MiniGameTWo
@@ -10,14 +9,14 @@ namespace MiniGameTWo
         public GameTwoManager GameManager;
 
         public SpritePair[] SpritePairs;
-        private SpritePair _currentPair;
-
+        SpritePair _currentPair;
         public void InitGame()
         {
             _currentPair = SpritePairs[Random.Range(0, SpritePairs.Length)];
 
             for (int i = 0; i < 16; i++)
             {
+                Debug.Log("InitGame");
                 GameObject tile = Instantiate(TilePrefab, GridParent);
                 TileButton tileBtn = tile.GetComponent<TileButton>();
 
@@ -29,4 +28,3 @@ namespace MiniGameTWo
         }
     }
 }
-

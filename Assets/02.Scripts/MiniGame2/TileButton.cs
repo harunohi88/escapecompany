@@ -1,10 +1,14 @@
-using DG.Tweening; // πˆ∆∞ ≈¨∏Ø«“ ∂ß πŸøÓΩ∫ »ø∞˙∏¶ ¡÷±‚ ¿ß«ÿ ªÁøÎ
+using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
+
+// Î≤ÑÌäº ÌÅ¥Î¶≠Ìï† Îïå Î∞îÏö¥Ïä§ Ìö®Í≥ºÎ•º Ï£ºÍ∏∞ ÏúÑÌï¥ ÏÇ¨Ïö©
 
 namespace MiniGameTWo
 {
-    [System.Serializable]
+    [Serializable]
     public class SpritePair
     {
         public Sprite RedSprite;
@@ -13,19 +17,20 @@ namespace MiniGameTWo
 
     public class TileButton : MonoBehaviour
     {
-        private Button _btn;
-        private Image _img;
-        public bool isRed = false;
+        public bool isRed;
 
-        [Header("πˆ∆∞ ªÁøÓµÂ º≥¡§")]
+        [Header("Î≤ÑÌäº ÏÇ¨Ïö¥Îìú ÏÑ§Ï†ï")]
         public AudioClip SuccessSound;
         public AudioClip FailSound;
-        private AudioSource _audioSource;
 
         public GameObject ButtonRightVFX;
         public GameObject ButtonWrongVFX;
+        AudioSource _audioSource;
+        Button _btn;
+        Image _img;
 
-        private GameTwoManager GameManager;
+        GameTwoManager GameManager;
+
         //public Sprite[] sprites;
 
         void Awake()
@@ -33,6 +38,7 @@ namespace MiniGameTWo
             _btn = GetComponent<Button>();
             _img = GetComponent<Image>();
             _audioSource = gameObject.GetComponent<AudioSource>();
+
             // _audioSource = GameObject.GetComponent<AudioSource>();
             _btn.onClick.AddListener(OnClick);
         }
@@ -40,16 +46,17 @@ namespace MiniGameTWo
         public void Init(bool red, GameTwoManager manager, Sprite redSprite, Sprite whiteSprite)
         {
             isRed = red;
+
             //img.color = red ? Color.red : Color.white;
             _img.sprite = red ? whiteSprite : redSprite;
             GameManager = manager;
 
-            // ∑£¥˝ ∞¢µµ π¸¿ß (ex: -10 ~ 10µµ ªÁ¿Ã)
-            float randomAngle = Random.Range(5f, 15f); // »ÁµÈ∏≤ ≈©±‚
-            float randomDuration = Random.Range(0.8f, 2f); // »ÁµÈ∏≤ º”µµ
-            float randomDelay = Random.Range(0f, 1.5f); // ≈∏¿Ãπ÷ ¬˜¿Ã
+            // ÎûúÎç§ Í∞ÅÎèÑ Î≤îÏúÑ (ex: -10 ~ 10ÎèÑ ÏÇ¨Ïù¥)
+            float randomAngle = Random.Range(5f, 15f); // ÌùîÎì§Î¶º ÌÅ¨Í∏∞
+            float randomDuration = Random.Range(0.8f, 2f); // ÌùîÎì§Î¶º ÏÜçÎèÑ
+            float randomDelay = Random.Range(0f, 1.5f); // ÌÉÄÏù¥Î∞ç Ï∞®Ïù¥
 
-            // ∑£¥˝ πÊ«‚ (øﬁ¬  ∂«¥¬ ø¿∏•¬ ∫Œ≈Õ Ω√¿€)
+            // ÎûúÎç§ Î∞©Ìñ• (ÏôºÏ™Ω ÎòêÎäî Ïò§Î•∏Ï™ΩÎ∂ÄÌÑ∞ ÏãúÏûë)
             float targetAngle = Random.value > 0.5f ? randomAngle : -randomAngle;
 
             transform.DORotate(new Vector3(0, 0, targetAngle), randomDuration).SetDelay(randomDelay).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
@@ -70,32 +77,21 @@ namespace MiniGameTWo
 
             if (isRed)
             {
-                //transform.DOShakeRotation(
-                //    duration: 2f,
-                //    strength: new Vector3(0, 0, 10f),
-                //    vibrato: 5,
-                //    randomness: 90,
-                //    fadeOut: true
-                //).SetLoops(-1);
 
-                //_img.color = Color.gray;
-                // πŸøÓΩ∫ »ø∞˙
-                //transform.DOKill();
                 _audioSource.PlayOneShot(SuccessSound);
                 transform.DOPunchScale(Vector3.one * 0.7f, 0.3f);
                 transform.DOScale(1.2f, 0.2f).SetLoops(-1, LoopType.Yoyo);
                 GameObject vfx = Instantiate(ButtonRightVFX, transform.position, Quaternion.identity);
                 GameManager.RegisterVFX(vfx);
-                GameManager.RedCleared();     // º∫∞¯ ¡∂∞« √º≈©
-            }
-            else
+                GameManager.RedCleared(); // ÏÑ±Í≥µ Ï°∞Í±¥ Ï≤¥ÌÅ¨
+            } else
             {
                 //transform.DOKill();
                 _audioSource.PlayOneShot(FailSound);
                 transform.DOPunchScale(Vector3.one * 0.5f, 0.3f);
                 GameObject vfx2 = Instantiate(ButtonWrongVFX, transform.position, Quaternion.identity);
                 Destroy(vfx2, 0.5f);
-                GameManager.OnwrongClick();   // Ω«∆– ¡∂∞« √º≈©
+                GameManager.OnwrongClick(); // Ïã§Ìå® Ï°∞Í±¥ Ï≤¥ÌÅ¨
             }
         }
     }
