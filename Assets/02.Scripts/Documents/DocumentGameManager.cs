@@ -118,7 +118,7 @@ namespace DocumentGame
         {
             Player.GameOver();
             _maxCombo = Mathf.Max(_maxCombo, _combo);
-            UI_MiniGame1.Instance.ShowResult(_totalScore, _maxCombo, _timer, _correctCount, _faultTrash, _faultImportant);
+            UI_MiniGame1.Instance.ShowResult(_totalScore, _maxCombo, _timer, _correctCount, _faultImportant, _faultTrash);
             _timer = 0;
             _combo = 0;
             _totalScore = 0;

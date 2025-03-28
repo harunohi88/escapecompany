@@ -59,6 +59,8 @@ namespace DocumentGame
         public void ShowResult(int totalScore, int maxCombo, float playTime, int correctDocument, int faultImportant, int faultTrash)
         {
             ResultPanel.SetActive(true);
+            InactivateCloseButton();
+
 
             // √ ±‚»≠
             TotalScore.alpha = 0;
@@ -94,6 +96,11 @@ namespace DocumentGame
         public void ActivateCloseButton()
         {
             CloseButton.SetActive(true);
+        }
+        
+        public void InactivateCloseButton()
+        {
+            CloseButton.SetActive(false);
         }
     }
 }
