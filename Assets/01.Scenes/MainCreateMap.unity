@@ -675,6 +675,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5645794162803844116, guid: 6c35c23f31fa140469ab5ea2e3ddcf3e, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7427092804232710268, guid: 6c35c23f31fa140469ab5ea2e3ddcf3e, type: 3}
       propertyPath: m_SortingOrder
       value: 2
@@ -4390,7 +4394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -171.8}
+  m_AnchoredPosition: {x: 0, y: -171.79999}
   m_SizeDelta: {x: 133, y: 134}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1915525734

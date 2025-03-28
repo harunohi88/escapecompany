@@ -15,11 +15,13 @@ namespace CreateMap
         Animator _animator;
         float _currentStunTime;
         Rigidbody2D _rb;
+        SpriteRenderer _sr;
         void Start()
         {
             StunEffect.SetActive(false);
             _rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+            _sr = GetComponent<SpriteRenderer>();
             _rb.isKinematic = false; // 물리적 상호작용을 받도록 설정
         }
 
@@ -44,7 +46,7 @@ namespace CreateMap
 
         void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag("player"))
+            if (other.gameObject.CompareTag("Player"))
             {
                 GameManager.Instance.GameOver();
             }
@@ -57,6 +59,14 @@ namespace CreateMap
 
             // 타일맵에 맞춰 AI가 이동
             Vector3 direction = (targetPosition - transform.position).normalized;
+
+            if (direction.x < 0)
+            {
+                _sr.flipX = true;
+            } else
+            {
+                _sr.flipX = false;
+            }
 
             // 충돌을 피하면서 이동
             _rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
