@@ -87,8 +87,8 @@ namespace DocumentGame
             Gauge.StopGauge();
             GenerateQueue(Stage);
             InitDisplay();
-            GameStart();
             Joystick.SetActive(false);
+            GameStart();
         }
 
         public void InitDisplay()

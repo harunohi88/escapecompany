@@ -80,6 +80,7 @@ namespace CreateMap
             _animator.SetBool("Play", false);
             _isPlay = false;
             Joystick.gameObject.SetActive(true);
+            Debug.Log("개졷버그발생");
         }
 
 

@@ -207,6 +207,7 @@ namespace MiniGameTWo
 
         void GameOver(bool success)
         {
+            Debug.Log("개졷버그발생!!!!!!");
             isGameOver = true;
             ResetTimerEffects();
 
