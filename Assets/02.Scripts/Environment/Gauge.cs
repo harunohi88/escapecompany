@@ -1,3 +1,4 @@
+using DocumentGame;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
 
@@ -37,6 +38,7 @@ namespace CreateMap
         public void StopGauge()
         {
             IsActive = true;
+            UI_MiniGame1.Instance.OnCloseButtonClicked += StartGauge;
         }
         public void StartGauge()
         {

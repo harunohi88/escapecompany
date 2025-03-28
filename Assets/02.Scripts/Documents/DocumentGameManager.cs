@@ -12,6 +12,7 @@ namespace DocumentGame
         public GameObject MainPlayer; // Move on Map Player
         public GameObject Camera;
         public GameObject Joystick;
+        public Gauge Gauge;
         public float TimeLimit;
         public int FeverCount;
         public float FeverTime;
@@ -20,6 +21,7 @@ namespace DocumentGame
         public int DisplayDocumentCount;
         public List<DisplaySlot> DisplaySlot;
         public string Stage = "LRLLRRRRLLLLRRLRRRLLLRRLRRRRLLLRLLLLLRRRRLRLLLRRLRLRRRL";
+        public int SuccessCount;
 
         private Queue<Document> _documentQueue = new Queue<Document>();
         private List<Document> _displayDocumentList = new List<Document>();
@@ -82,6 +84,7 @@ namespace DocumentGame
             }
             Vector3 newPosition = new Vector3(Camera.transform.position.x, Camera.transform.position.y, transform.position.z);
             transform.parent.transform.position = newPosition;
+            Gauge.StopGauge();
             GenerateQueue(Stage);
             InitDisplay();
             GameStart();
@@ -120,6 +123,7 @@ namespace DocumentGame
         public void GameOver()
         {
             Player.GameOver();
+            IsSuccess();
             _maxCombo = Mathf.Max(_maxCombo, _combo);
             UI_MiniGame1.Instance.ShowResult(_totalScore, _maxCombo, _timer, _correctCount, _faultImportant, _faultTrash);
             _timer = 0;
@@ -140,6 +144,15 @@ namespace DocumentGame
             _documentQueue.Clear();
             UI_MiniGame1.Instance.InactivateCombo();
             UI_MiniGame1.Instance.InactivateFever();
+        }
+
+        public void IsSuccess()
+        {
+            if (_faultTrash + _faultImportant < SuccessCount)
+            {
+                Gauge.Reset();
+                MainPlayer.GetComponent<CreateMap.Player>().AddStunItemNum();
+            }
         }
 
         private void ShowResult()

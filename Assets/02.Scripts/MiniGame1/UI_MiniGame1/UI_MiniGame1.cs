@@ -2,12 +2,15 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UIElements;
+using System;
 
 namespace DocumentGame
 {
     public class UI_MiniGame1 : MonoBehaviour
     {
         public static UI_MiniGame1 Instance;
+
+        public Action OnCloseButtonClicked;
 
         public TextMeshProUGUI ComboText;
 
@@ -91,6 +94,7 @@ namespace DocumentGame
         public void HideResult()
         {
             ResultPanel.SetActive(false);
+            OnCloseButtonClicked?.Invoke();
         }
 
         public void ActivateCloseButton()

@@ -2447,6 +2447,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fd8e76345b51514192b06302a709901, type: 3}
+--- !u!114 &578276814 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3574234575619941273, guid: 0fd8e76345b51514192b06302a709901, type: 3}
+  m_PrefabInstance: {fileID: 578276813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ef02f98494df349a07167dd4cf2afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -4434,6 +4445,7 @@ MonoBehaviour:
   player: {fileID: 1207166004}
   UIMiniTwo: {fileID: 471945587654055461}
   TimerText: {fileID: 1037327554050022353}
+  TimerIcon: {fileID: 0}
   GameTime: 10
   HeartPrefab:
   - {fileID: 6044231261414377164}
@@ -4445,6 +4457,9 @@ MonoBehaviour:
   - {fileID: 4400847129494157405}
   BombPrefab: {fileID: 3131986531512435601}
   UIPrefab: {fileID: 6035661962197630807}
+  TileButton: {fileID: 0}
+  _audioSource: {fileID: 0}
+  VFXs: []
 --- !u!1 &1272817652355537609
 GameObject:
   m_ObjectHideFlags: 0
@@ -4781,7 +4796,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRed: 0
-  GameManager: {fileID: 1191217829834620364}
+  SuccessSound: {fileID: 0}
+  FailSound: {fileID: 0}
+  ButtonRightVFX: {fileID: 0}
+  ButtonWrongVFX: {fileID: 0}
 --- !u!95 &3662046058318577240
 Animator:
   serializedVersion: 7
@@ -5845,6 +5863,7 @@ MonoBehaviour:
   MainPlayer: {fileID: 1266052497}
   Camera: {fileID: 519420028}
   Joystick: {fileID: 1590489777}
+  Gauge: {fileID: 578276814}
   TimeLimit: 60
   FeverCount: 10
   FeverTime: 3
@@ -5860,6 +5879,7 @@ MonoBehaviour:
   - {fileID: 2259587188414471347}
   - {fileID: 7342619053283380774}
   Stage: LRLLRRRRLLLLRRLRRRLLLRRLRRRRLLLRLLLLLRRRRLRLLLRRLRLRRRL
+  SuccessCount: 10
 --- !u!4 &8842286711728157498
 Transform:
   m_ObjectHideFlags: 0
