@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 namespace CreateMap
 {
@@ -6,6 +7,11 @@ namespace CreateMap
     {
         public float MoveSpeed = 5f; // 이동 속도
         public DynamicJoystick Joystick;
+
+        [Header("스턴 아이템")]
+        public TextMeshProUGUI ItemNum;
+        public int StunItem;
+
         Animator _animator;
 
         bool _isPlay;
@@ -17,6 +23,7 @@ namespace CreateMap
         {
             _rigidbody2D = GetComponent<Rigidbody2D>(); // Rigidbody2D 가져오기
             _animator = GetComponent<Animator>(); // Animator 가져오기
+            SetStunItemNum();
         }
 
         void Update()
@@ -69,6 +76,24 @@ namespace CreateMap
             _animator.SetBool("Play", false);
             _isPlay = false;
             Joystick.gameObject.SetActive(true);
+        }
+
+
+        public void SetStunItemNum()
+        {
+            ItemNum.text = StunItem.ToString();
+        }
+
+        public void AddStunItemNum()
+        {
+            StunItem++;
+            SetStunItemNum();
+        }
+
+        public void UseStunItem()
+        {
+            StunItem--;
+            SetStunItemNum();
         }
     }
 }

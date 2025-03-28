@@ -23,4 +23,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainCreateMap");
     }
+
+    public void GameOver()
+    {
+        // Time.timeScale = 0;
+    }
+
+    public void GameWin()
+    {
+        // Time.timeScale = 0;
+    }
 }

@@ -36,6 +36,7 @@ namespace CreateMap
                 {
                     Minute = 0;
                     Hour++;
+                    GameManager.Instance.GameWin();
                 }
 
                 UpdateTimerText();
