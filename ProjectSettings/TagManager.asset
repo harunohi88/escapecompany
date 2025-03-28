@@ -51,6 +51,9 @@ TagManager:
   - name: InDoor
     uniqueID: 1838163873
     locked: 0
+  - name: Ingame
+    uniqueID: 2681248817
+    locked: 0
   - name: UI
     uniqueID: 800067473
     locked: 0

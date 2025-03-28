@@ -1,10 +1,17 @@
 using UnityEngine;
 using DG.Tweening;
 
+public enum DocumentType
+{
+    Important,
+    Trash
+}
+
 namespace DocumentGame
 {
     public class Document : MonoBehaviour
     {
+        public DocumentType Type;
         public int DefaultScore;
         public Vector3 Direction;
         public float Duration;
@@ -17,7 +24,7 @@ namespace DocumentGame
             }
             else
             {
-                DocumentGameManager.Instance.Wrong(DefaultScore);
+                DocumentGameManager.Instance.Wrong(DefaultScore, Type);
             }
 
             transform.DOMove(transform.position + direction, Duration).OnComplete(() => Destroy(gameObject));
