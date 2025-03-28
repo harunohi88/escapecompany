@@ -5,15 +5,19 @@ namespace CreateMap
 {
     public class UI_Game : MonoBehaviour
     {
-        public static readonly int SECONDPERMINIUTE = 20;
-        public TextMeshProUGUI GlobalTimmer;
+        public static readonly int SECONDS_PER_MINUTE = 12;
+        public TextMeshProUGUI GlobalTimer;
 
-        int _minute = 50;
         float _second;
+
+        public int Hour { get; private set; } = 5;
+        public int Minute { get; private set; } = 50;
+
         void Start()
         {
-            GlobalTimmer.text = $"05 : {_minute}";
+            UpdateTimerText();
         }
+
         void Update()
         {
             UpdateTimer();
@@ -21,17 +25,27 @@ namespace CreateMap
 
         void UpdateTimer()
         {
-            if (_minute == 60)
-            {
-                GlobalTimmer.text = "06 : 00";
-            }
             _second += Time.deltaTime;
-            if (_second >= SECONDPERMINIUTE)
+
+            if (_second >= SECONDS_PER_MINUTE)
             {
                 _second = 0;
-                _minute++;
-                GlobalTimmer.text = $"05 : {_minute}";
+                Minute++;
+
+                if (Minute >= 60)
+                {
+                    Minute = 0;
+                    Hour++;
+                    GameManager.Instance.GameWin();
+                }
+
+                UpdateTimerText();
             }
+        }
+
+        void UpdateTimerText()
+        {
+            GlobalTimer.text = $"{Hour:D2} : {Minute:D2}";
         }
     }
 }

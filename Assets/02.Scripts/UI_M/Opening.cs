@@ -7,6 +7,7 @@ public class Opening : MonoBehaviour
     void Start()
     {
         StartCoroutine(OpeningSequence());
+
     }
 
     IEnumerator OpeningSequence()
@@ -23,5 +24,7 @@ public class Opening : MonoBehaviour
             Openings[i].SetActive(true);
             yield return new WaitForSecondsRealtime(1.2f);
         }
+
+        GameManager.Instance.LoadScene();
     }
 }

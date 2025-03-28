@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GameTwo
   - GameOne
+  - Boss
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -15,9 +17,9 @@ TagManager:
   - UI
   - OutDoor
   - Object
-  - 
-  - 
-  - 
+  - Player
+  - Wall
+  - Boss
   - 
   - 
   - 
@@ -45,6 +47,9 @@ TagManager:
     locked: 0
   - name: OutDoor
     uniqueID: 69103239
+    locked: 0
+  - name: InDoor
+    uniqueID: 1838163873
     locked: 0
   - name: Ingame
     uniqueID: 2681248817

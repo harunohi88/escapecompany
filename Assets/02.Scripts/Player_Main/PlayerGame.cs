@@ -22,14 +22,8 @@ public class PlayerGame : MonoBehaviour
 
     void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.CompareTag("GameTwo"))
-        {
-            StartButton.MiniGame2 = false;
-        }
-
-        if (other.gameObject.CompareTag("GameOne"))
-        {
-            StartButton.MiniGame1 = false;
-        }
+        Debug.Log("충돌 끝");
+        StartButton.MiniGame1 = false;
+        StartButton.MiniGame2 = false;
     }
 }
