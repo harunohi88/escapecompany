@@ -3,8 +3,8 @@ using DG.Tweening;
 
 public enum DocumentType
 {
-    Left,
-    Right
+    Important,
+    Trash
 }
 
 namespace DocumentGame
@@ -24,7 +24,7 @@ namespace DocumentGame
             }
             else
             {
-                DocumentGameManager.Instance.Wrong(DefaultScore);
+                DocumentGameManager.Instance.Wrong(DefaultScore, Type);
             }
 
             transform.DOMove(transform.position + direction, Duration).OnComplete(() => Destroy(gameObject));

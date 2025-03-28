@@ -63,7 +63,7 @@ namespace DocumentGame
                 return;
             }
 
-            if (_current.Type == DocumentType.Left)
+            if (_current.Type == DocumentType.Important)
             {
                 _direction = _safe;
             }

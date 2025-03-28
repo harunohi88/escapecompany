@@ -21,19 +21,20 @@ namespace DocumentGame
             }
         }
 
-        public void UIActive()
+        public void ActivateCombo()
         {
             ComboText.gameObject.SetActive(true);
         }
 
-        public void UIInactive()
+        public void InactivateCombo()
         {
             ComboText.gameObject.SetActive(false);
         }
 
-        public void ComboRefresh(int combo)
+        public void RefreshComboText(int combo)
         {
             ComboText.text = $"{combo}";
         }
+
     }
 }

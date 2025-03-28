@@ -30,6 +30,9 @@ namespace DocumentGame
         private int _feverGauge = 0;
         private float _timer = 0;
         private float _feverTimer = 0;
+        private int _wrongTrash = 0;
+        private int _wrongImportant = 0;
+        private int _correctCount = 0;
 
         void Awake()
         {
@@ -78,7 +81,6 @@ namespace DocumentGame
             transform.parent.transform.position = newPosition;
             GenerateQueue(Stage);
             InitDisplay();
-            UI_MiniGame1.Instance.UIActive();
             GameStart();
             Joystick.SetActive(false);
         }
@@ -99,8 +101,14 @@ namespace DocumentGame
             _totalScore = 0;
             _maxCombo = 0;
             _feverGauge = 0;
+            _correctCount = 0;
+            _wrongTrash = 0;
+            _wrongImportant = 0;
             _status = true;
             _fever = false;
+            _feverTimer = 0;
+            UI_MiniGame1.Instance.RefreshComboText(_combo);
+            UI_MiniGame1.Instance.ActivateCombo();
 
             Player.GameStart();
         }
@@ -108,15 +116,25 @@ namespace DocumentGame
         public void GameOver()
         {
             Player.GameOver();
-            _status = false;
             _maxCombo = Mathf.Max(_maxCombo, _combo);
             ShowResult();
+            _timer = 0;
+            _combo = 0;
+            _totalScore = 0;
+            _maxCombo = 0;
+            _feverGauge = 0;
+            _correctCount = 0;
+            _wrongTrash = 0;
+            _wrongImportant = 0;
+            _status = false;
+            _fever = false;
+            _feverTimer = 0;
             Joystick.SetActive(true);
             MainPlayer.GetComponent<CreateMap.Player>().Stop();
             _documentQueue.Clear();
             _displayDocumentList.Clear();
             _documentQueue.Clear();
-            UI_MiniGame1.Instance.UIInactive();
+            UI_MiniGame1.Instance.InactivateCombo();
         }
 
         private void ShowResult()
@@ -124,6 +142,9 @@ namespace DocumentGame
             Debug.Log($"Total Score : {_totalScore}");
             Debug.Log($"Max Combo : {_maxCombo}");
             Debug.Log($"Play Time : {_timer.ToString("F2")}");
+            Debug.Log($"제대로 분류한 서류 : {_correctCount}");
+            Debug.Log($"갈아버린 1급 기밀 : {_wrongImportant}");
+            Debug.Log($"소중하게 보관한 쓰레기 : {_wrongTrash}");
         }
 
         public void Correct(int score)
@@ -134,8 +155,9 @@ namespace DocumentGame
                 return;
             }
             this._totalScore += score * ((_combo / 10) + 1);
+            ++_correctCount;
             ++_combo;
-            UI_MiniGame1.Instance.ComboRefresh(_combo);
+            UI_MiniGame1.Instance.RefreshComboText(_combo);
             ++_feverGauge;
             if (_feverGauge >= 10) // magic number
             {
@@ -145,16 +167,25 @@ namespace DocumentGame
             }
         }
 
-        public void Wrong(int score)
+        public void Wrong(int score, DocumentType type)
         {
             if (_fever)
             {
                 Fever(score);
                 return;
             }
+
+            if (type == DocumentType.Trash)
+            {
+                ++_wrongTrash;
+            }
+            else
+            {
+                ++_wrongImportant;
+            }
             _maxCombo = Mathf.Max(_maxCombo, _combo);
             _combo = 0;
-            UI_MiniGame1.Instance.ComboRefresh(_combo);
+            UI_MiniGame1.Instance.RefreshComboText(_combo);
             _feverGauge = Mathf.Max(0, _feverGauge - 5); // magic number
         }
 
@@ -162,7 +193,8 @@ namespace DocumentGame
         {
             this._totalScore += score * ((_combo / 10) + 1); // magic number
             ++_combo;
-            UI_MiniGame1.Instance.ComboRefresh(_combo);
+            ++_correctCount;
+            UI_MiniGame1.Instance.RefreshComboText(_combo);
         }
 
         private void GenerateQueue(string stage)
@@ -174,10 +206,10 @@ namespace DocumentGame
                 switch (type)
                 {
                     case 'L':
-                        document = Instantiate(DocumentPrefabList[(int)DocumentType.Left]);
+                        document = Instantiate(DocumentPrefabList[(int)DocumentType.Important]);
                         break;
                     case 'R':
-                        document = Instantiate(DocumentPrefabList[(int)DocumentType.Right]);
+                        document = Instantiate(DocumentPrefabList[(int)DocumentType.Trash]);
                         break;
                 }
                 document.gameObject.SetActive(false);
