@@ -44,15 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d818012cbd3d60e4abe962c025dffcdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ui: {fileID: 0}
-  timerText: {fileID: 0}
-  gameTime: 10
-  heartPrefab:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  goalPrefab:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  bombPrefab: {fileID: 0}
+  player: {fileID: 0}
+  UIMiniTwo: {fileID: 0}
+  TimerText: {fileID: 0}
+  GameTime: 10
+  HeartPrefab: []
+  GoalPrefab: []
+  BombPrefab: {fileID: 0}
+  UIPrefab: {fileID: 0}
