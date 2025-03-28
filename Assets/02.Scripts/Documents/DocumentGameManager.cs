@@ -30,8 +30,8 @@ namespace DocumentGame
         private int _feverGauge = 0;
         private float _timer = 0;
         private float _feverTimer = 0;
-        private int _wrongTrash = 0;
-        private int _wrongImportant = 0;
+        private int _faultTrash = 0;
+        private int _faultImportant = 0;
         private int _correctCount = 0;
 
         void Awake()
@@ -67,6 +67,7 @@ namespace DocumentGame
                     Player.FeverEnd();
                     _fever = false;
                     _feverTimer = 0;
+                    _feverGauge = 0;
                 }
             }
         }
@@ -102,8 +103,8 @@ namespace DocumentGame
             _maxCombo = 0;
             _feverGauge = 0;
             _correctCount = 0;
-            _wrongTrash = 0;
-            _wrongImportant = 0;
+            _faultTrash = 0;
+            _faultImportant = 0;
             _status = true;
             _fever = false;
             _feverTimer = 0;
@@ -117,15 +118,15 @@ namespace DocumentGame
         {
             Player.GameOver();
             _maxCombo = Mathf.Max(_maxCombo, _combo);
-            ShowResult();
+            UI_MiniGame1.Instance.ShowResult(_totalScore, _maxCombo, _timer, _correctCount, _faultTrash, _faultImportant);
             _timer = 0;
             _combo = 0;
             _totalScore = 0;
             _maxCombo = 0;
             _feverGauge = 0;
             _correctCount = 0;
-            _wrongTrash = 0;
-            _wrongImportant = 0;
+            _faultTrash = 0;
+            _faultImportant = 0;
             _status = false;
             _fever = false;
             _feverTimer = 0;
@@ -143,8 +144,8 @@ namespace DocumentGame
             Debug.Log($"Max Combo : {_maxCombo}");
             Debug.Log($"Play Time : {_timer.ToString("F2")}");
             Debug.Log($"제대로 분류한 서류 : {_correctCount}");
-            Debug.Log($"갈아버린 1급 기밀 : {_wrongImportant}");
-            Debug.Log($"소중하게 보관한 쓰레기 : {_wrongTrash}");
+            Debug.Log($"갈아버린 1급 기밀 : {_faultImportant}");
+            Debug.Log($"소중하게 보관한 쓰레기 : {_faultTrash}");
         }
 
         public void Correct(int score)
@@ -177,11 +178,11 @@ namespace DocumentGame
 
             if (type == DocumentType.Trash)
             {
-                ++_wrongTrash;
+                ++_faultTrash;
             }
             else
             {
-                ++_wrongImportant;
+                ++_faultImportant;
             }
             _maxCombo = Mathf.Max(_maxCombo, _combo);
             _combo = 0;
