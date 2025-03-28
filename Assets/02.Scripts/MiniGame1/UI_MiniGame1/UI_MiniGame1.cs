@@ -2,12 +2,15 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UIElements;
+using System;
 
 namespace DocumentGame
 {
     public class UI_MiniGame1 : MonoBehaviour
     {
         public static UI_MiniGame1 Instance;
+
+        public Action OnCloseButtonClicked;
 
         public TextMeshProUGUI ComboText;
 
@@ -19,7 +22,8 @@ namespace DocumentGame
         public TextMeshProUGUI FaultImportant;
         public TextMeshProUGUI FaultTrash;
         public GameObject CloseButton;
-
+        public TextMeshProUGUI Fever;
+        public GameObject FeverVFX;
 
         private void Awake()
         {
@@ -59,6 +63,8 @@ namespace DocumentGame
         public void ShowResult(int totalScore, int maxCombo, float playTime, int correctDocument, int faultImportant, int faultTrash)
         {
             ResultPanel.SetActive(true);
+            InactivateCloseButton();
+
 
             // √ ±‚»≠
             TotalScore.alpha = 0;
@@ -89,11 +95,27 @@ namespace DocumentGame
         public void HideResult()
         {
             ResultPanel.SetActive(false);
+            OnCloseButtonClicked?.Invoke();
         }
 
         public void ActivateCloseButton()
         {
             CloseButton.SetActive(true);
+        }
+        
+        public void InactivateCloseButton()
+        {
+            CloseButton.SetActive(false);
+        }
+
+        public void ActivateFever()
+        {
+            Fever.gameObject.SetActive(true);
+        }
+
+        public void InactivateFever()
+        {
+            Fever.gameObject.SetActive(false);
         }
     }
 }

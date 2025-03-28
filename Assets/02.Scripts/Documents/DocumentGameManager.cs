@@ -12,13 +12,16 @@ namespace DocumentGame
         public GameObject MainPlayer; // Move on Map Player
         public GameObject Camera;
         public GameObject Joystick;
+        public Gauge Gauge;
         public float TimeLimit;
+        public int FeverCount;
         public float FeverTime;
         public MiniGame1Player Player; // Invisible Player
         public List<Document> DocumentPrefabList;
         public int DisplayDocumentCount;
         public List<DisplaySlot> DisplaySlot;
         public string Stage = "LRLLRRRRLLLLRRLRRRLLLRRLRRRRLLLRLLLLLRRRRLRLLLRRLRLRRRL";
+        public int SuccessCount;
 
         private Queue<Document> _documentQueue = new Queue<Document>();
         private List<Document> _displayDocumentList = new List<Document>();
@@ -65,6 +68,7 @@ namespace DocumentGame
                 {
                     Debug.Log("Fever Time End!!");
                     Player.FeverEnd();
+                    UI_MiniGame1.Instance.InactivateFever();
                     _fever = false;
                     _feverTimer = 0;
                     _feverGauge = 0;
@@ -80,6 +84,7 @@ namespace DocumentGame
             }
             Vector3 newPosition = new Vector3(Camera.transform.position.x, Camera.transform.position.y, transform.position.z);
             transform.parent.transform.position = newPosition;
+            Gauge.StopGauge();
             GenerateQueue(Stage);
             InitDisplay();
             GameStart();
@@ -110,6 +115,7 @@ namespace DocumentGame
             _feverTimer = 0;
             UI_MiniGame1.Instance.RefreshComboText(_combo);
             UI_MiniGame1.Instance.ActivateCombo();
+            UI_MiniGame1.Instance.InactivateFever();
 
             Player.GameStart();
         }
@@ -117,8 +123,9 @@ namespace DocumentGame
         public void GameOver()
         {
             Player.GameOver();
+            IsSuccess();
             _maxCombo = Mathf.Max(_maxCombo, _combo);
-            UI_MiniGame1.Instance.ShowResult(_totalScore, _maxCombo, _timer, _correctCount, _faultTrash, _faultImportant);
+            UI_MiniGame1.Instance.ShowResult(_totalScore, _maxCombo, _timer, _correctCount, _faultImportant, _faultTrash);
             _timer = 0;
             _combo = 0;
             _totalScore = 0;
@@ -136,6 +143,16 @@ namespace DocumentGame
             _displayDocumentList.Clear();
             _documentQueue.Clear();
             UI_MiniGame1.Instance.InactivateCombo();
+            UI_MiniGame1.Instance.InactivateFever();
+        }
+
+        public void IsSuccess()
+        {
+            if (_faultTrash + _faultImportant < SuccessCount)
+            {
+                Gauge.Reset();
+                MainPlayer.GetComponent<CreateMap.Player>().AddStunItemNum();
+            }
         }
 
         private void ShowResult()
@@ -160,9 +177,10 @@ namespace DocumentGame
             ++_combo;
             UI_MiniGame1.Instance.RefreshComboText(_combo);
             ++_feverGauge;
-            if (_feverGauge >= 10) // magic number
+            if (_feverGauge >= FeverCount) // magic number
             {
                 Debug.Log("Fever Time!!");
+                UI_MiniGame1.Instance.ActivateFever();
                 _fever = true;
                 Player.Fever();
             }
