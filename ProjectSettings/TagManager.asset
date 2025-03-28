@@ -46,6 +46,9 @@ TagManager:
   - name: OutDoor
     uniqueID: 69103239
     locked: 0
+  - name: InDoor
+    uniqueID: 1838163873
+    locked: 0
   - name: UI
     uniqueID: 800067473
     locked: 0
