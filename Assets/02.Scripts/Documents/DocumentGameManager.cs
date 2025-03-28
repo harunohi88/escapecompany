@@ -13,6 +13,7 @@ namespace DocumentGame
         public GameObject Camera;
         public GameObject Joystick;
         public float TimeLimit;
+        public int FeverCount;
         public float FeverTime;
         public MiniGame1Player Player; // Invisible Player
         public List<Document> DocumentPrefabList;
@@ -160,7 +161,7 @@ namespace DocumentGame
             ++_combo;
             UI_MiniGame1.Instance.RefreshComboText(_combo);
             ++_feverGauge;
-            if (_feverGauge >= 10) // magic number
+            if (_feverGauge >= FeverCount) // magic number
             {
                 Debug.Log("Fever Time!!");
                 _fever = true;
