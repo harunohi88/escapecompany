@@ -66,6 +66,7 @@ namespace DocumentGame
                 {
                     Debug.Log("Fever Time End!!");
                     Player.FeverEnd();
+                    UI_MiniGame1.Instance.InactivateFever();
                     _fever = false;
                     _feverTimer = 0;
                     _feverGauge = 0;
@@ -111,6 +112,7 @@ namespace DocumentGame
             _feverTimer = 0;
             UI_MiniGame1.Instance.RefreshComboText(_combo);
             UI_MiniGame1.Instance.ActivateCombo();
+            UI_MiniGame1.Instance.InactivateFever();
 
             Player.GameStart();
         }
@@ -137,6 +139,7 @@ namespace DocumentGame
             _displayDocumentList.Clear();
             _documentQueue.Clear();
             UI_MiniGame1.Instance.InactivateCombo();
+            UI_MiniGame1.Instance.InactivateFever();
         }
 
         private void ShowResult()
@@ -164,6 +167,7 @@ namespace DocumentGame
             if (_feverGauge >= FeverCount) // magic number
             {
                 Debug.Log("Fever Time!!");
+                UI_MiniGame1.Instance.ActivateFever();
                 _fever = true;
                 Player.Fever();
             }

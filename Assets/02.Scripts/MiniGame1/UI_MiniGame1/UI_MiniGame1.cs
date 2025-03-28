@@ -19,7 +19,7 @@ namespace DocumentGame
         public TextMeshProUGUI FaultImportant;
         public TextMeshProUGUI FaultTrash;
         public GameObject CloseButton;
-
+        public TextMeshProUGUI Fever;
 
         private void Awake()
         {
@@ -101,6 +101,16 @@ namespace DocumentGame
         public void InactivateCloseButton()
         {
             CloseButton.SetActive(false);
+        }
+
+        public void ActivateFever()
+        {
+            Fever.gameObject.SetActive(true);
+        }
+
+        public void InactivateFever()
+        {
+            Fever.gameObject.SetActive(false);
         }
     }
 }

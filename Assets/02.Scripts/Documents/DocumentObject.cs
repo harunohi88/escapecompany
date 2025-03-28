@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class DocumentObject : MonoBehaviour
+namespace DocumentGame
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class DocumentObject : MonoBehaviour
     {
-        
-    }
+        public VFXType VFXType;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("GameOne"))
+            {
+                VFXPoolManager.Instance.VFX(VFXType, transform.position);
+            }
+        }
     }
 }
