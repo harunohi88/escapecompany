@@ -23,6 +23,7 @@ namespace DocumentGame
         public TextMeshProUGUI FaultTrash;
         public GameObject CloseButton;
         public TextMeshProUGUI Fever;
+        public GameObject FeverVFX;
 
         private void Awake()
         {
