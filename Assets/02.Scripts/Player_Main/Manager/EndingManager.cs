@@ -5,6 +5,7 @@ public class EndingManager : MonoBehaviour
     public GameObject BackGround;
     public GameObject[] Ending;
 
+    bool isEnd;
 
     void Awake()
     {
@@ -20,6 +21,8 @@ public class EndingManager : MonoBehaviour
     public void GameOver()
     {
         // Time.timeScale = 0;
+        if (isEnd) return;
+        isEnd = true;
         BackGround.SetActive(true);
         Ending[1].SetActive(true);
         BGMManager.Instance.BGMS[0].Stop();
@@ -29,6 +32,9 @@ public class EndingManager : MonoBehaviour
 
     public void GameWin()
     {
+        if (isEnd) return;
+        isEnd = true;
+
         // Time.timeScale = 0;
         BackGround.SetActive(true);
         Ending[0].SetActive(true);

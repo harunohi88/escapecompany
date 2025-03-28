@@ -28,6 +28,7 @@ namespace MiniGameTWo
         public AudioSource _audioSource;
         public List<GameObject> VFXs;
         public bool isGameOver;
+        public bool isGameStart;
 
         Vector3 _originalPos;
 
@@ -46,6 +47,7 @@ namespace MiniGameTWo
 
         void Update()
         {
+            if (!isGameStart) return;
             if (isGameOver) return;
 
             timer -= Time.deltaTime;
@@ -59,12 +61,16 @@ namespace MiniGameTWo
 
             if (timer <= 0)
             {
+                Debug.Log("Timmer 0");
                 GameOver(false);
             }
         }
 
         public void InitGame()
         {
+            if (isGameStart) return;
+            isGameStart = true;
+
             DOTween.KillAll(); // 모든 tween 초기화 (중복 방지)
             enabled = true;
             isGameOver = false;
@@ -84,13 +90,6 @@ namespace MiniGameTWo
 
             TimerIcon.transform.DOScale(1.2f, 0.5f).SetLoops(-1, LoopType.Yoyo);
             UIMiniTwo.InitGame();
-        }
-
-        public void RestartGame()
-        {
-            ClearTilesAndVFX();
-            enabled = true;
-            InitGame();
         }
 
         void UpdateTimerColor()
@@ -143,6 +142,7 @@ namespace MiniGameTWo
 
                 if (successCount >= maxSuccess)
                 {
+                    Debug.Log("성공임");
                     GameOver(true);
                 } else
                 {
@@ -157,6 +157,7 @@ namespace MiniGameTWo
 
             if (currentHealth <= 0)
             {
+                Debug.Log("체력 0임");
                 GameOver(false);
                 return;
             }
@@ -166,6 +167,7 @@ namespace MiniGameTWo
 
             if (currentHealth <= 0)
             {
+                Debug.Log("체력 02임");
                 GameOver(false);
             } else
             {
@@ -210,6 +212,7 @@ namespace MiniGameTWo
             isGameOver = true;
             ResetTimerEffects();
 
+            Debug.Log("Game Over");
             player.Stop();
             if (success)
             {
@@ -226,6 +229,7 @@ namespace MiniGameTWo
             isGameOver = false;
             UIPrefab.SetActive(false);
             enabled = false;
+            isGameStart = false;
         }
 
         void ClearTilesAndVFX()

@@ -1,7 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using CreateMap;
+using UnityEngine;
 
 namespace DocumentGame
 {
@@ -11,7 +10,6 @@ namespace DocumentGame
 
         public GameObject MainPlayer; // Move on Map Player
         public GameObject Camera;
-        public GameObject Joystick;
         public Gauge Gauge;
         public float TimeLimit;
         public int FeverCount;
@@ -22,34 +20,33 @@ namespace DocumentGame
         public List<DisplaySlot> DisplaySlot;
         public string Stage = "LRLLRRRRLLLLRRLRRRLLLRRLRRRRLLLRLLLLLRRRRLRLLLRRLRLRRRL";
         public int SuccessCount;
+        readonly List<Document> _displayDocumentList = new List<Document>();
 
-        private Queue<Document> _documentQueue = new Queue<Document>();
-        private List<Document> _displayDocumentList = new List<Document>();
-        private bool _status = false;
-        private bool _fever = false;
-        private int _totalScore = 0;
-        private int _maxCombo = 0;
-        private int _combo = 0;
-        private int _feverGauge = 0;
-        private float _timer = 0;
-        private float _feverTimer = 0;
-        private int _faultTrash = 0;
-        private int _faultImportant = 0;
-        private int _correctCount = 0;
+        readonly Queue<Document> _documentQueue = new Queue<Document>();
+        int _combo;
+        int _correctCount;
+        int _faultImportant;
+        int _faultTrash;
+        bool _fever;
+        int _feverGauge;
+        float _feverTimer;
+        int _maxCombo;
+        bool _status;
+        float _timer;
+        int _totalScore;
 
         void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
-            }
-            else
+            } else
             {
                 Destroy(gameObject);
             }
         }
 
-        private void Update()
+        void Update()
         {
             if (!_status)
             {
@@ -88,7 +85,6 @@ namespace DocumentGame
             GenerateQueue(Stage);
             InitDisplay();
             GameStart();
-            Joystick.SetActive(false);
         }
 
         public void InitDisplay()
@@ -137,8 +133,8 @@ namespace DocumentGame
             _status = false;
             _fever = false;
             _feverTimer = 0;
-            Joystick.SetActive(true);
-            MainPlayer.GetComponent<CreateMap.Player>().Stop();
+            Debug.Log("Ï°∞Ïù¥Ïä§Ìã± ÏºúÎ≤ÑÎ¶¨");
+            MainPlayer.GetComponent<Player>().Stop();
             _documentQueue.Clear();
             _displayDocumentList.Clear();
             _documentQueue.Clear();
@@ -151,18 +147,18 @@ namespace DocumentGame
             if (_faultTrash + _faultImportant < SuccessCount)
             {
                 Gauge.Reset();
-                MainPlayer.GetComponent<CreateMap.Player>().AddStunItemNum();
+                MainPlayer.GetComponent<Player>().AddStunItemNum();
             }
         }
 
-        private void ShowResult()
+        void ShowResult()
         {
             Debug.Log($"Total Score : {_totalScore}");
             Debug.Log($"Max Combo : {_maxCombo}");
             Debug.Log($"Play Time : {_timer.ToString("F2")}");
-            Debug.Log($"¡¶¥Î∑Œ ∫–∑˘«— º≠∑˘ : {_correctCount}");
-            Debug.Log($"∞•æ∆πˆ∏∞ 1±ﬁ ±‚π– : {_faultImportant}");
-            Debug.Log($"º“¡ﬂ«œ∞‘ ∫∏∞¸«— æ≤∑π±‚ : {_faultTrash}");
+            Debug.Log($"ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ–∑ÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ : {_correctCount}");
+            Debug.Log($"ÔøΩÔøΩÔøΩ∆πÔøΩÔøΩÔøΩ 1ÔøΩÔøΩ ÔøΩÔøΩÔøΩ : {_faultImportant}");
+            Debug.Log($"ÔøΩÔøΩÔøΩÔøΩÔøΩœ∞ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ : {_faultTrash}");
         }
 
         public void Correct(int score)
@@ -172,7 +168,7 @@ namespace DocumentGame
                 Fever(score);
                 return;
             }
-            this._totalScore += score * ((_combo / 10) + 1);
+            _totalScore += score * (_combo / 10 + 1);
             ++_correctCount;
             ++_combo;
             UI_MiniGame1.Instance.RefreshComboText(_combo);
@@ -197,8 +193,7 @@ namespace DocumentGame
             if (type == DocumentType.Trash)
             {
                 ++_faultTrash;
-            }
-            else
+            } else
             {
                 ++_faultImportant;
             }
@@ -208,15 +203,15 @@ namespace DocumentGame
             _feverGauge = Mathf.Max(0, _feverGauge - 5); // magic number
         }
 
-        private void Fever(int score)
+        void Fever(int score)
         {
-            this._totalScore += score * ((_combo / 10) + 1); // magic number
+            _totalScore += score * (_combo / 10 + 1); // magic number
             ++_combo;
             ++_correctCount;
             UI_MiniGame1.Instance.RefreshComboText(_combo);
         }
 
-        private void GenerateQueue(string stage)
+        void GenerateQueue(string stage)
         {
             Document document = null;
 
@@ -224,12 +219,12 @@ namespace DocumentGame
             {
                 switch (type)
                 {
-                    case 'L':
-                        document = Instantiate(DocumentPrefabList[(int)DocumentType.Important]);
-                        break;
-                    case 'R':
-                        document = Instantiate(DocumentPrefabList[(int)DocumentType.Trash]);
-                        break;
+                case 'L':
+                    document = Instantiate(DocumentPrefabList[(int)DocumentType.Important]);
+                    break;
+                case 'R':
+                    document = Instantiate(DocumentPrefabList[(int)DocumentType.Trash]);
+                    break;
                 }
                 document.gameObject.SetActive(false);
                 _documentQueue.Enqueue(document);
@@ -241,8 +236,7 @@ namespace DocumentGame
             if (_documentQueue.Count > 0)
             {
                 _displayDocumentList.Add(_documentQueue.Dequeue());
-            }
-            else
+            } else
             {
                 _displayDocumentList.Add(null);
             }

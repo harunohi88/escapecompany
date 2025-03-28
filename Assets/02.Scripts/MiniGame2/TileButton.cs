@@ -78,7 +78,7 @@ namespace MiniGameTWo
             if (isRed)
             {
 
-                _audioSource.PlayOneShot(SuccessSound);
+                _audioSource.PlayOneShot(SuccessSound, 0.4f);
                 transform.DOPunchScale(Vector3.one * 0.7f, 0.3f);
                 transform.DOScale(1.2f, 0.2f).SetLoops(-1, LoopType.Yoyo);
                 GameObject vfx = Instantiate(ButtonRightVFX, transform.position, Quaternion.identity);
@@ -87,7 +87,7 @@ namespace MiniGameTWo
             } else
             {
                 //transform.DOKill();
-                _audioSource.PlayOneShot(FailSound);
+                _audioSource.PlayOneShot(FailSound, 0.4f);
                 transform.DOPunchScale(Vector3.one * 0.5f, 0.3f);
                 GameObject vfx2 = Instantiate(ButtonWrongVFX, transform.position, Quaternion.identity);
                 Destroy(vfx2, 0.5f);
