@@ -1,3 +1,4 @@
+using DocumentGame;
 using UnityEngine;
 
 namespace CreateMap
@@ -77,6 +78,8 @@ namespace CreateMap
         public void Stun()
         {
             Player _player = player.GetComponent<Player>();
+            StartButton startButton = player.GetComponent<PlayerGame>().StartButton;
+            if (startButton.IsAnyGame()) return;
             if (_player.StunItem > 0)
             {
                 _player.UseStunItem();
