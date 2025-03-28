@@ -15,6 +15,8 @@ namespace CreateMap
         public void Reset()
         {
             CurrentTime = 0;
+            enabled = true;
+            IsActive = false;
         }
         void Update()
         {
@@ -40,7 +42,9 @@ namespace CreateMap
         }
         public void StartGauge()
         {
+            Debug.Log("게이지 재시작!!!!!!!!");
             IsActive = false;
+            enabled = true;
         }
     }
 }

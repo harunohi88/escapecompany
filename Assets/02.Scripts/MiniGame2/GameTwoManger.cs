@@ -213,10 +213,12 @@ namespace MiniGameTWo
             player.Stop();
             if (success)
             {
+                Debug.Log("게임 클리어 처리");
                 player.AddStunItemNum();
                 Gauge.Reset();
             } else
             {
+                Debug.Log("게임 실패 처리 - 게이지 시작!");
                 Gauge.StartGauge();
             }
 
