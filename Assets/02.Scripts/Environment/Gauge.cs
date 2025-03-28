@@ -9,7 +9,7 @@ namespace CreateMap
 
         public float MaxTime;
         public float CurrentTime;
-
+        public bool IsActive { get; set; }
 
         // 미니게임을 성공하면 Reset
         public void Reset()
@@ -18,6 +18,7 @@ namespace CreateMap
         }
         void Update()
         {
+            if (IsActive) return;
             CurrentTime += Time.deltaTime;
             Image.fillAmount = CurrentTime / MaxTime;
 
@@ -28,9 +29,18 @@ namespace CreateMap
             }
         }
 
+
         public float GetPercent()
         {
             return CurrentTime / MaxTime;
+        }
+        public void StopGauge()
+        {
+            IsActive = true;
+        }
+        public void StartGauge()
+        {
+            IsActive = false;
         }
     }
 }

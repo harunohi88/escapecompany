@@ -20,7 +20,7 @@ public class PlayerGame : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision other)
+    void OnCollisionExit2D(Collision2D other)
     {
         Debug.Log("충돌 끝");
         StartButton.MiniGame1 = false;
