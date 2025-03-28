@@ -13,6 +13,7 @@ namespace CreateMap
         public int StunItem;
 
         Animator _animator;
+        AudioSource _audio;
 
         bool _isPlay;
         Vector2 _movement;
@@ -23,7 +24,10 @@ namespace CreateMap
         {
             _rigidbody2D = GetComponent<Rigidbody2D>(); // Rigidbody2D 가져오기
             _animator = GetComponent<Animator>(); // Animator 가져오기
+            _audio = GetComponent<AudioSource>();
+
             SetStunItemNum();
+
         }
 
         void Update()
@@ -92,6 +96,7 @@ namespace CreateMap
 
         public void UseStunItem()
         {
+            _audio.Play();
             StunItem--;
             SetStunItemNum();
         }

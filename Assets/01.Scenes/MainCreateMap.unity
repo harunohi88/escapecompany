@@ -3706,10 +3706,6 @@ PrefabInstance:
       propertyPath: Joystick
       value: 
       objectReference: {fileID: 1600115437}
-    - target: {fileID: 8374213100150037030, guid: 593938e40c41a9a4e9f7e908ff421d27, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4387,6 +4383,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ComboText: {fileID: 475946507}
+  ResultPanel: {fileID: 0}
+  TotalScore: {fileID: 0}
+  MaxCombo: {fileID: 0}
+  PlayTime: {fileID: 0}
+  CorrectDocument: {fileID: 0}
+  FaultImportant: {fileID: 0}
+  FaultTrash: {fileID: 0}
+  CloseButton: {fileID: 0}
 --- !u!95 &8767342926682407069
 Animator:
   serializedVersion: 7

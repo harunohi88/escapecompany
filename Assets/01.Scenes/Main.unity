@@ -3175,7 +3175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1272817651765979678, guid: 604eadae3198eca41a828c1d0fd5320c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9162992462364976576, guid: 604eadae3198eca41a828c1d0fd5320c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3606,7 +3606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f4255df3ce5884aac49f864b679681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalTimmer: {fileID: 70642832}
+  GlobalTimer: {fileID: 0}
 --- !u!1 &2024027294
 GameObject:
   m_ObjectHideFlags: 0
@@ -4354,6 +4354,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ComboText: {fileID: 475946507}
+  ResultPanel: {fileID: 0}
+  TotalScore: {fileID: 0}
+  MaxCombo: {fileID: 0}
+  PlayTime: {fileID: 0}
+  CorrectDocument: {fileID: 0}
+  FaultImportant: {fileID: 0}
+  FaultTrash: {fileID: 0}
+  CloseButton: {fileID: 0}
 --- !u!114 &8815914187153215141
 MonoBehaviour:
   m_ObjectHideFlags: 0
