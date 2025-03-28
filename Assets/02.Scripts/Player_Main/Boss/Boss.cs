@@ -50,7 +50,7 @@ namespace CreateMap
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                GameManager.Instance.GameOver();
+                EndingManager.Instance.GameOver();
             }
         }
 

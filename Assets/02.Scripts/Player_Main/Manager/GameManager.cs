@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+
     void Awake()
     {
         if (Instance == null)
@@ -22,15 +23,5 @@ public class GameManager : MonoBehaviour
     public void LoadScene()
     {
         SceneManager.LoadScene("MainCreateMap");
-    }
-
-    public void GameOver()
-    {
-        // Time.timeScale = 0;
-    }
-
-    public void GameWin()
-    {
-        // Time.timeScale = 0;
     }
 }

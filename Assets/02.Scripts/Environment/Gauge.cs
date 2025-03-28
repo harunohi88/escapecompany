@@ -26,7 +26,7 @@ namespace CreateMap
 
             if (CurrentTime >= MaxTime)
             {
-                // GameManager.Instance.GameOver();
+                EndingManager.Instance.GameOver();
                 Debug.Log("게임오버");
             }
         }

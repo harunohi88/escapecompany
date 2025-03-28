@@ -5,7 +5,7 @@ namespace CreateMap
 {
     public class UI_Game : MonoBehaviour
     {
-        public static readonly int SECONDS_PER_MINUTE = 12;
+        public static readonly int SECONDS_PER_MINUTE = 1;
         public TextMeshProUGUI GlobalTimer;
 
         float _second;
@@ -36,7 +36,7 @@ namespace CreateMap
                 {
                     Minute = 0;
                     Hour++;
-                    GameManager.Instance.GameWin();
+                    EndingManager.Instance.GameWin();
                 }
 
                 UpdateTimerText();
