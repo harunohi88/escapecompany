@@ -14,10 +14,12 @@ namespace DocumentGame
         private Document _current;
         private Vector3 _shredder;
         private Vector3 _safe;
+        private bool _fever;
 
         private void OnEnable()
         {
             LeanTouch.OnFingerSwipe += HandleFingerSwipe;
+            LeanTouch.OnFingerTap += HandleFingerTap;
             _shredder = Shredder.transform.position - Origin.transform.position;
             _safe = Safe.transform.position - Origin.transform.position;
         }
@@ -25,6 +27,7 @@ namespace DocumentGame
         private void OnDisable()
         {
             LeanTouch.OnFingerSwipe -= HandleFingerSwipe;
+            LeanTouch.OnFingerTap -= HandleFingerTap;
         }
 
         void Update()
@@ -53,8 +56,30 @@ namespace DocumentGame
             DocumentGameManager.Instance.Process();
         }
 
+        private void HandleFingerTap(LeanFinger finger)
+        {
+            if (!_fever || _current == null)
+            {
+                return;
+            }
+
+            if (_current.Type == DocumentType.Left)
+            {
+                _direction = _safe;
+            }
+            else
+            {
+                _direction = _shredder;
+            }
+        }
+
         private void HandleFingerSwipe(LeanFinger finger)
         {
+            if (_current == null)
+            {
+                return;
+            }
+
             Vector2 swipeDelta = finger.SwipeScreenDelta;
 
             if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
@@ -68,22 +93,11 @@ namespace DocumentGame
                     _direction = _safe;
                 }
             }
-            else
-            {
-                if (swipeDelta.y < 0)
-                {
-                    _direction = Vector3.down;
-                }
-            }
         }
 
         private void GetKeycode()
         {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                _direction = Vector3.down;
-            }
-            else if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A))
             {
                 _direction = Vector3.left;
             }
@@ -97,15 +111,28 @@ namespace DocumentGame
         {
             _current = null;
             _status = true;
+            _fever = false;
             Shredder.SetActive(true);
             Safe.SetActive(true);
         }
 
         public void GameOver()
         {
+            _current = null;
             _status = false;
+            _fever = false;
             Shredder.SetActive(false);
             Safe.SetActive(false);
+        }
+
+        public void Fever()
+        {
+            _fever = true;
+        }
+
+        public void FeverEnd()
+        {
+            _fever = false;
         }
     }
 }

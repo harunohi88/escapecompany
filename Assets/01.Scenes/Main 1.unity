@@ -2116,7 +2116,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000910fb02f
+  m_ApplyToSortingLayers: 00000000910fb02f319cd09f
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2472,8 +2472,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1613718479
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -8937129176323195211, guid: 04c8af4442c5cfd48b9e4d921f787156, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2559,8 +2559,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1613718479
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2334897530242756195, guid: 1e2f10693618d4f4b812749e36498c2f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2621,7 +2621,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 876e1e04
+  m_ApplyToSortingLayers: 876e1e04319cd09f
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -3223,7 +3223,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 800067473
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1902215770
@@ -4742,7 +4742,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 800067473
   m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!222 &5801619478504403914
@@ -4854,7 +4854,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 800067473
   m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &6632734389247831172
@@ -5397,7 +5397,6 @@ MonoBehaviour:
   FeverTime: 5
   Player: {fileID: 7564649391036595535}
   DocumentPrefabList:
-  - {fileID: 6043444019606789631, guid: a8a9cf45434b8a74da4be77807b0b5be, type: 3}
   - {fileID: 2268337889518476505, guid: 1fcec4ff2bbb2bd41a6c4ee734980e55, type: 3}
   - {fileID: 8416040029599441111, guid: d932b3df9929a3e4ebf30f99184be23a, type: 3}
   DisplayDocumentCount: 5

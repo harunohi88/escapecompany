@@ -3,25 +3,18 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using CreateMap;
 
-public enum DocumentType
-{
-    Down,
-    Left,
-    Right
-}
-
 namespace DocumentGame
 {
     public class DocumentGameManager : MonoBehaviour
     {
         public static DocumentGameManager Instance;
 
-        public GameObject MainPlayer;
+        public GameObject MainPlayer; // Move on Map Player
         public GameObject Camera;
         public GameObject Joystick;
         public float TimeLimit;
         public float FeverTime;
-        public MiniGame1Player Player;
+        public MiniGame1Player Player; // Invisible Player
         public List<Document> DocumentPrefabList;
         public int DisplayDocumentCount;
         public List<DisplaySlot> DisplaySlot;
@@ -68,6 +61,7 @@ namespace DocumentGame
                 if (_feverTimer >= FeverTime)
                 {
                     Debug.Log("Fever Time End!!");
+                    Player.FeverEnd();
                     _fever = false;
                     _feverTimer = 0;
                 }
@@ -147,6 +141,7 @@ namespace DocumentGame
             {
                 Debug.Log("Fever Time!!");
                 _fever = true;
+                Player.Fever();
             }
         }
 
@@ -178,9 +173,6 @@ namespace DocumentGame
             {
                 switch (type)
                 {
-                    case 'D':
-                        document = Instantiate(DocumentPrefabList[(int)DocumentType.Down]);
-                        break;
                     case 'L':
                         document = Instantiate(DocumentPrefabList[(int)DocumentType.Left]);
                         break;

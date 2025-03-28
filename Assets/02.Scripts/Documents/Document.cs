@@ -1,10 +1,17 @@
 using UnityEngine;
 using DG.Tweening;
 
+public enum DocumentType
+{
+    Left,
+    Right
+}
+
 namespace DocumentGame
 {
     public class Document : MonoBehaviour
     {
+        public DocumentType Type;
         public int DefaultScore;
         public Vector3 Direction;
         public float Duration;
