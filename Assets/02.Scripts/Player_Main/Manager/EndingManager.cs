@@ -22,6 +22,9 @@ public class EndingManager : MonoBehaviour
         // Time.timeScale = 0;
         BackGround.SetActive(true);
         Ending[1].SetActive(true);
+        BGMManager.Instance.BGMS[0].Stop();
+        BGMManager.Instance.BGMS[0].mute = true;
+        BGMManager.Instance.BGMS[1].Play();
     }
 
     public void GameWin()
@@ -29,5 +32,8 @@ public class EndingManager : MonoBehaviour
         // Time.timeScale = 0;
         BackGround.SetActive(true);
         Ending[0].SetActive(true);
+        BGMManager.Instance.BGMS[0].Stop();
+        BGMManager.Instance.BGMS[0].mute = true;
+        BGMManager.Instance.BGMS[2].Play();
     }
 }

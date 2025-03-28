@@ -9,6 +9,7 @@ public class PlayerGame : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
+        Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("GameTwo"))
         {
             StartButton.MiniGame2 = true;
@@ -18,6 +19,11 @@ public class PlayerGame : MonoBehaviour
         {
             StartButton.MiniGame1 = true;
         }
+        if (other.gameObject.CompareTag("Boss"))
+        {
+            EndingManager.Instance.GameOver();
+        }
+
     }
 
     void OnCollisionExit2D(Collision2D other)

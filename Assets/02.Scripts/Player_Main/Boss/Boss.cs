@@ -46,13 +46,6 @@ namespace CreateMap
             }
         }
 
-        void OnCollisionEnter2D(Collision2D other)
-        {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                EndingManager.Instance.GameOver();
-            }
-        }
 
         void MoveTowardsPlayer()
         {
