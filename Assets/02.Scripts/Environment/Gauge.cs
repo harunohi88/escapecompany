@@ -1,3 +1,4 @@
+using System;
 using DocumentGame;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
@@ -11,7 +12,8 @@ namespace CreateMap
         public float MaxTime;
         public float CurrentTime;
         public bool IsActive { get; set; }
-
+        
+        
         // 미니게임을 성공하면 Reset
         public void Reset()
         {
@@ -19,9 +21,22 @@ namespace CreateMap
             enabled = true;
             IsActive = false;
         }
+        void OnEnable()
+        {
+            DialogueManager.Instance.OnDialogueEnded += StartGauge;
+        }
+        void OnDisable()
+        {
+            DialogueManager.Instance.OnDialogueEnded -= StartGauge;
+        }
+
+        void Start()
+        {
+            IsActive = false;
+        }
         void Update()
         {
-            if (IsActive) return;
+            if (!IsActive) return;
             CurrentTime += Time.deltaTime;
             Image.fillAmount = CurrentTime / MaxTime;
 
@@ -39,13 +54,13 @@ namespace CreateMap
         }
         public void StopGauge()
         {
-            IsActive = true;
+            IsActive = false;
             UI_MiniGame1.Instance.OnCloseButtonClicked += StartGauge;
         }
         public void StartGauge()
         {
             Debug.Log("게이지 재시작!!!!!!!!");
-            IsActive = false;
+            IsActive = true;
             enabled = true;
         }
     }

@@ -19,8 +19,10 @@ namespace DocumentGame
         public void OnClickMiniGame2Start()
         {
             if (MiniGame2 == false) return;
-
+            
             EnterMiniGameTwo();
+            DialogueManager.Instance.DeActiveDialogueBox();
+            DialogueManager.Instance.NextDialogue();
         }
 
         void EnterMiniGameTwo()

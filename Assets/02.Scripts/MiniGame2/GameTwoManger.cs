@@ -211,7 +211,7 @@ namespace MiniGameTWo
         {
             isGameOver = true;
             ResetTimerEffects();
-
+    
             Debug.Log("Game Over");
             player.Stop();
             if (success)
@@ -230,6 +230,8 @@ namespace MiniGameTWo
             UIPrefab.SetActive(false);
             enabled = false;
             isGameStart = false;
+
+            DialogueManager.Instance.ActiveDialogueBox();
         }
 
         void ClearTilesAndVFX()

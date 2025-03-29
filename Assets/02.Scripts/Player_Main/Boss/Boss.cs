@@ -18,6 +18,12 @@ namespace CreateMap
         float _currentStunTime;
         Rigidbody2D _rb;
         SpriteRenderer _sr;
+        bool _isActive;
+
+        void StartBoss()
+        {
+            _isActive = true;
+        }
         void Start()
         {
             StunEffect.SetActive(false);
@@ -25,11 +31,24 @@ namespace CreateMap
             _animator = GetComponent<Animator>();
             _sr = GetComponent<SpriteRenderer>();
             _rb.isKinematic = false; // 물리적 상호작용을 받도록 설정
+
+            _isActive = false;
+        }
+
+        void OnEnable()
+        {
+            DialogueManager.Instance.OnDialogueEnded += StartBoss;
+        }
+
+        void OnDisable()
+        {
+            DialogueManager.Instance.OnDialogueEnded -= StartBoss;
         }
 
         void Update()
         {
-
+            if (!_isActive) return;
+            
             if (!IsStun)
                 MoveTowardsPlayer();
             else

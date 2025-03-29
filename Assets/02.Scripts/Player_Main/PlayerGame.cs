@@ -17,7 +17,23 @@ public class PlayerGame : MonoBehaviour
         }
 
     }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("GameTwo"))
+        {
+            Debug.Log(other.gameObject.tag);
+            if (DialogueManager.Instance.CurrentIndex == 0)
+            {
+                DialogueManager.Instance.NextDialogue();
+            }
 
+        }
+
+        if (other.gameObject.CompareTag("GameOne"))
+        {
+            DialogueManager.Instance.NextDialogue();
+        }
+    }
     void OnTriggerExit2D(Collider2D other)
     {
         Debug.Log("충돌 끝");

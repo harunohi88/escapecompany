@@ -9,8 +9,21 @@ namespace CreateMap
         public UI_Game gameTime; // UI_Game 참조
         public Light2D sceneLight;
 
+        bool isActive = false;
+
+        void OnEnable()
+        {
+            DialogueManager.Instance.OnDialogueEnded += Activate;
+        }
+
+        void OnDisable()
+        {
+            DialogueManager.Instance.OnDialogueEnded -= Activate;
+        }
         void Update()
         {
+            if (!isActive) return;
+            
             if (gameTime == null || sceneLight == null)
                 return;
 
@@ -18,6 +31,11 @@ namespace CreateMap
             timeFactor = Mathf.Clamp01(timeFactor); // 0~1 범위로 제한
 
             sceneLight.color = dayNightGradient.Evaluate(timeFactor);
+        }
+
+        void Activate()
+        {
+            isActive = true;
         }
     }
 }

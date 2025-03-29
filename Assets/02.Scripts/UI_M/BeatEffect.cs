@@ -8,9 +8,14 @@ public class BeatEffect : MonoBehaviour
     public float beatDuration = 0.1f; // 애니메이션 지속 시간
     Vector3 originalScale;
 
-    void Start()
+    void OnEnable()
     {
-        DoBeatEffect();
+        DialogueManager.Instance.OnDialogueEnded += DoBeatEffect;
+    }
+
+    void OnDisable()
+    {
+        DialogueManager.Instance.OnDialogueEnded -= DoBeatEffect;
     }
 
     void DoBeatEffect()
