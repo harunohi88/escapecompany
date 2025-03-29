@@ -1,3 +1,4 @@
+using System.Collections;
 using Com.LuisPedroFonseca.ProCamera2D;
 using DocumentGame;
 using UnityEngine;
@@ -102,6 +103,18 @@ namespace CreateMap
 
                 IsStun = true;
             }
+
+            if (DialogueManager.Instance.CurrentIndex == 6)
+            {
+                DialogueManager.Instance.NextDialogue();
+                StartCoroutine(Wait2Seconds());
+            }
+        }
+
+        IEnumerator Wait2Seconds()
+        {
+            yield return new WaitForSeconds(2f);
+            DialogueManager.Instance.NextDialogue();
         }
     }
 }

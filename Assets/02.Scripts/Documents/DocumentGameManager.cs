@@ -140,6 +140,11 @@ namespace DocumentGame
             _documentQueue.Clear();
             UI_MiniGame1.Instance.InactivateCombo();
             UI_MiniGame1.Instance.InactivateFever();
+
+            if (DialogueManager.Instance.CurrentIndex == 5)
+            {
+                DialogueManager.Instance.ActiveDialogueBox();
+            }
         }
 
         public void IsSuccess()

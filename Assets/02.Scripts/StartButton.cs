@@ -14,6 +14,11 @@ namespace DocumentGame
         {
             if (MiniGame1 == false) return;
             DocumentGameManager.Instance.NewGame();
+
+            if (DialogueManager.Instance.CurrentIndex != 4) return;
+
+            DialogueManager.Instance.DeActiveDialogueBox();
+            DialogueManager.Instance.NextDialogue();
         }
 
         public void OnClickMiniGame2Start()
@@ -21,6 +26,9 @@ namespace DocumentGame
             if (MiniGame2 == false) return;
             
             EnterMiniGameTwo();
+
+            if (DialogueManager.Instance.CurrentIndex != 1) return;
+            
             DialogueManager.Instance.DeActiveDialogueBox();
             DialogueManager.Instance.NextDialogue();
         }

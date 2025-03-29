@@ -13,7 +13,15 @@ public class PlayerGame : MonoBehaviour
 
         if (other.gameObject.CompareTag("Boss"))
         {
-            EndingManager.Instance.GameOver();
+            if (DialogueManager.Instance.CurrentIndex == 5)
+            {
+                DialogueManager.Instance.NextDialogue();
+            }
+            else
+            {
+                EndingManager.Instance.GameOver();
+            }
+            
         }
 
     }
@@ -21,17 +29,18 @@ public class PlayerGame : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GameTwo"))
         {
-            Debug.Log(other.gameObject.tag);
-            if (DialogueManager.Instance.CurrentIndex == 0)
+            if (DialogueManager.Instance.CurrentIndex == 1)
             {
                 DialogueManager.Instance.NextDialogue();
             }
-
         }
 
         if (other.gameObject.CompareTag("GameOne"))
         {
-            DialogueManager.Instance.NextDialogue();
+            if (DialogueManager.Instance.CurrentIndex == 3)
+            {
+                DialogueManager.Instance.NextDialogue();
+            }
         }
     }
     void OnTriggerExit2D(Collider2D other)

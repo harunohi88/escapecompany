@@ -231,7 +231,11 @@ namespace MiniGameTWo
             enabled = false;
             isGameStart = false;
 
-            DialogueManager.Instance.ActiveDialogueBox();
+            if (DialogueManager.Instance.CurrentIndex == 2)
+            {
+                DialogueManager.Instance.ActiveDialogueBox();
+                DialogueManager.Instance.NextDialogue();
+            }
         }
 
         void ClearTilesAndVFX()

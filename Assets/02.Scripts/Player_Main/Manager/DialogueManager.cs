@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 public class DialogueManager : MonoBehaviour
@@ -25,6 +26,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        NextDialogue();
+    }
     public void ActiveDialogueBox()
     {
         DialogueBox.SetActive(true);
@@ -50,4 +55,5 @@ public class DialogueManager : MonoBehaviour
 
         }
     }
+    
 }
