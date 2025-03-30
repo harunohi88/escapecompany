@@ -155,6 +155,7 @@ namespace DocumentGame
             UI_MiniGame1.Instance.InactivateCombo();
             UI_MiniGame1.Instance.InactivateFever();
 
+            if (DialogueManager.Instance == null) return;
             if (DialogueManager.Instance.CurrentIndex == 5)
             {
                 DialogueManager.Instance.ActiveDialogueBox();

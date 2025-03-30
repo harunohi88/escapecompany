@@ -13,11 +13,20 @@ namespace CreateMap
 
         void OnEnable()
         {
-            DialogueManager.Instance.OnDialogueEnded += Activate;
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.OnDialogueEnded += Activate;
+            }
+            else
+            {
+                isActive = true;
+            }
+            
         }
 
         void OnDisable()
         {
+            if (DialogueManager.Instance == null) return;
             DialogueManager.Instance.OnDialogueEnded -= Activate;
         }
         void Update()

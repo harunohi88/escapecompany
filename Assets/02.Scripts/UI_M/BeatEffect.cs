@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using CreateMap;
 // DoTween 네임스페이스 추가
 
 public class BeatEffect : MonoBehaviour
@@ -10,11 +11,21 @@ public class BeatEffect : MonoBehaviour
 
     void OnEnable()
     {
-        DialogueManager.Instance.OnDialogueEnded += DoBeatEffect;
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnded += DoBeatEffect;
+        }
+        else
+        {
+            DoBeatEffect();
+        }
+        
+       
     }
 
     void OnDisable()
     {
+        if (DialogueManager.Instance == null) return;
         DialogueManager.Instance.OnDialogueEnded -= DoBeatEffect;
     }
 

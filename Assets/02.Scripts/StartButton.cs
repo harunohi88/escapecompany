@@ -1,6 +1,6 @@
 using MiniGameTWo;
 using UnityEngine;
-
+using CreateMap;
 namespace DocumentGame
 {
     public class StartButton : MonoBehaviour
@@ -15,6 +15,7 @@ namespace DocumentGame
             if (MiniGame1 == false) return;
             DocumentGameManager.Instance.NewGame();
 
+            if (DialogueManager.Instance == null) return;
             if (DialogueManager.Instance.CurrentIndex != 4) return;
 
             DialogueManager.Instance.DeActiveDialogueBox();
@@ -27,6 +28,7 @@ namespace DocumentGame
             
             EnterMiniGameTwo();
 
+            if (DialogueManager.Instance == null) return;
             if (DialogueManager.Instance.CurrentIndex != 1) return;
             
             DialogueManager.Instance.DeActiveDialogueBox();

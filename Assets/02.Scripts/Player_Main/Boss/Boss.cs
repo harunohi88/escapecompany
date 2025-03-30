@@ -11,7 +11,7 @@ namespace CreateMap
         public Transform player; // 추적할 플레이어
         public float moveSpeed = 3f; // AI의 이동 속도
 
-        NavMeshAgent _agent;
+        [SerializeField] NavMeshAgent _agent;
 
         [Header("스턴효과")]
         public bool IsStun;
@@ -23,17 +23,14 @@ namespace CreateMap
         SpriteRenderer _sr;
         bool _isActive;
 
-        void StartBoss()
-        {
-            _isActive = true;
-        }
+        
         void Start()
         {
             StunEffect.SetActive(false);
             _rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _sr = GetComponent<SpriteRenderer>();
-            _agent = GetComponent<NavMeshAgent>();
+            // _agent = GetComponent<NavMeshAgent>();
 
             _agent.updateRotation = false;
             _agent.updateUpAxis = false;
@@ -45,21 +42,40 @@ namespace CreateMap
 
         void OnEnable()
         {
-            DialogueManager.Instance.OnDialogueEnded += StartBoss;
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.OnDialogueEnded += StartBoss;
+                IsStun = false;
+            }
+            else
+            {
+                _isActive = true;
+                IsStun = false;
+            }
+        }
+
+        public void StartBoss()
+        {
+            Debug.Log("StartBoss 호출됨!");
+            _isActive = true;
         }
 
         void OnDisable()
         {
-            DialogueManager.Instance.OnDialogueEnded -= StartBoss;
+            if (DialogueManager.Instance == null) return;
+            // DialogueManager.Instance.OnDialogueEnded -= StartBoss;
         }
 
         void Update()
         {
+            Debug.Log(_isActive);
+            Debug.Log(IsStun);
             if (!_isActive) return;
             
             if (!IsStun)
-                // MoveTowardsPlayer();
+            {
                 _agent.SetDestination(player.position);
+            }
             else
             {
                 _agent.isStopped = true;
@@ -114,6 +130,7 @@ namespace CreateMap
                 IsStun = true;
             }
 
+            if (DialogueManager.Instance == null) return;
             if (DialogueManager.Instance.CurrentIndex == 6)
             {
                 DialogueManager.Instance.NextDialogue();

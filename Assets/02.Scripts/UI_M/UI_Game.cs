@@ -19,10 +19,12 @@ namespace CreateMap
 
         void OnEnable()
         {
+            if (DialogueManager.Instance == null) return;
             DialogueManager.Instance.OnDialogueEnded += StartTimer;
         }
         void OnDisable()
         {
+            if (DialogueManager.Instance == null) return;
             DialogueManager.Instance.OnDialogueEnded -= StartTimer;
         }
         void Start()

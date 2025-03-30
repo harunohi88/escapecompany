@@ -23,19 +23,28 @@ namespace CreateMap
         }
         void OnEnable()
         {
-            DialogueManager.Instance.OnDialogueEnded += Activete;
-            UI_MiniGame1.Instance.ShowResultAction += StopGauge;
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.OnDialogueEnded += Activete;
+                DialogueManager.Instance.OnDialogueEnded += StartGauge;
+                UI_MiniGame1.Instance.ShowResultAction += StopGauge;
+            }
+            else
+            {
+                Activete();
+                StartGauge();
+            }
+            
+        
         }
         void OnDisable()
         {
+            if (DialogueManager.Instance == null) return;
             DialogueManager.Instance.OnDialogueEnded -= Activete;
+            DialogueManager.Instance.OnDialogueEnded -= StartGauge;
             UI_MiniGame1.Instance.ShowResultAction -= StopGauge;
         }
-
-        void Start()
-        {
-            IsActive = false;
-        }
+        
         void Update()
         {
             if (!_isActive) return;
