@@ -1,3 +1,4 @@
+using DocumentGame;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace CreateMap
         public TextMeshProUGUI GlobalTimer;
 
         float _second;
+        private bool pause = false;
 
         public int Hour { get; private set; } = 5;
         public int Minute { get; private set; } = 50;
@@ -16,6 +18,7 @@ namespace CreateMap
         void Start()
         {
             UpdateTimerText();
+            UI_MiniGame1.Instance.ShowResultAction += PauseTimer;
         }
 
         void Update()
@@ -25,6 +28,8 @@ namespace CreateMap
 
         void UpdateTimer()
         {
+            if (pause) return;
+
             _second += Time.deltaTime;
 
             if (_second >= SECONDS_PER_MINUTE)
@@ -46,6 +51,17 @@ namespace CreateMap
         void UpdateTimerText()
         {
             GlobalTimer.text = $"{Hour:D2} : {Minute:D2}";
+        }
+    
+        public void PauseTimer()
+        {
+            pause = true;
+            UI_MiniGame1.Instance.OnCloseButtonClicked += ResumeTimer;
+        }
+
+        public void ResumeTimer()
+        {
+            pause = false;
         }
     }
 }

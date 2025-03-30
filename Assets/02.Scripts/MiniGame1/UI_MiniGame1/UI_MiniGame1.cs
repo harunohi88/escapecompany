@@ -10,6 +10,7 @@ namespace DocumentGame
     {
         public static UI_MiniGame1 Instance;
 
+        public Action ShowResultAction;
         public Action OnCloseButtonClicked;
 
         public TextMeshProUGUI ComboText;
@@ -62,6 +63,7 @@ namespace DocumentGame
 
         public void ShowResult(int totalScore, int maxCombo, float playTime, int correctDocument, int faultImportant, int faultTrash)
         {
+            ShowResultAction?.Invoke();
             ResultPanel.SetActive(true);
             InactivateCloseButton();
 

@@ -19,6 +19,11 @@ namespace CreateMap
             enabled = true;
             IsActive = false;
         }
+
+        private void Start()
+        {
+            UI_MiniGame1.Instance.ShowResultAction += StopGauge;
+        }
         void Update()
         {
             if (IsActive) return;
