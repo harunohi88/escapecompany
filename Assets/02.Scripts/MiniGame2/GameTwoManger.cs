@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Com.LuisPedroFonseca.ProCamera2D;
 using CreateMap;
 using DG.Tweening;
 using TMPro;
@@ -211,6 +212,8 @@ namespace MiniGameTWo
         {
             isGameOver = true;
             ResetTimerEffects();
+            ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[6]);
+            Handheld.Vibrate(); // 진동
 
             Debug.Log("Game Over");
             player.Stop();
