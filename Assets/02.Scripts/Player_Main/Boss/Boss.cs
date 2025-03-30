@@ -21,9 +21,9 @@ namespace CreateMap
         float _currentStunTime;
         Rigidbody2D _rb;
         SpriteRenderer _sr;
-        bool _isActive;
+        bool _isActive = false;
 
-        
+
         void Start()
         {
             StunEffect.SetActive(false);
@@ -34,10 +34,11 @@ namespace CreateMap
 
             _agent.updateRotation = false;
             _agent.updateUpAxis = false;
-            
+
             _rb.isKinematic = false; // 물리적 상호작용을 받도록 설정
 
             _isActive = false;
+            Debug.Log("Boss 스크립트 시작됨!");
         }
 
         void OnEnable()
@@ -49,6 +50,7 @@ namespace CreateMap
             }
             else
             {
+                Debug.Log("_isActive를 true로 변경");
                 _isActive = true;
                 IsStun = false;
             }
@@ -68,10 +70,10 @@ namespace CreateMap
 
         void Update()
         {
-            Debug.Log(_isActive);
-            Debug.Log(IsStun);
+            Debug.Log($"Update() - _isActive: {_isActive}");
+            Debug.Log($"Update() - IsStun: {IsStun}");
             if (!_isActive) return;
-            
+
             if (!IsStun)
             {
                 _agent.SetDestination(player.position);
@@ -104,7 +106,8 @@ namespace CreateMap
             if (direction.x < 0)
             {
                 _sr.flipX = true;
-            } else
+            }
+            else
             {
                 _sr.flipX = false;
             }

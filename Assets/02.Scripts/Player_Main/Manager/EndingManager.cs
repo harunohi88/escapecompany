@@ -2,7 +2,7 @@
 public class EndingManager : MonoBehaviour
 {
     public static EndingManager Instance;
-    public GameObject BackGround;
+    public GameObject EndingUI; // Ending UI를 담을 배
     public GameObject[] Ending;
 
     bool isEnd;
@@ -13,7 +13,8 @@ public class EndingManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // 싱글톤 유지
-        } else if (Instance != this)
+        }
+        else if (Instance != this)
         {
             Destroy(gameObject); // 기존 인스턴스가 있다면 삭제
         }
@@ -23,7 +24,7 @@ public class EndingManager : MonoBehaviour
         // Time.timeScale = 0;
         if (isEnd) return;
         isEnd = true;
-        BackGround.SetActive(true);
+        EndingUI.SetActive(true);
         Ending[1].SetActive(true);
         BGMManager.Instance.BGMS[0].Stop();
         BGMManager.Instance.BGMS[0].mute = true;
@@ -36,7 +37,7 @@ public class EndingManager : MonoBehaviour
         isEnd = true;
 
         // Time.timeScale = 0;
-        BackGround.SetActive(true);
+        EndingUI.SetActive(true);
         Ending[0].SetActive(true);
         BGMManager.Instance.BGMS[0].Stop();
         BGMManager.Instance.BGMS[0].mute = true;
