@@ -1167,6 +1167,9 @@ MonoBehaviour:
   _serializedAxis: 0
   ShakePresets:
   - {fileID: 11400000, guid: a4b0b25580a794d259ee085755a1b142, type: 2}
+  - {fileID: 11400000, guid: 944c5fd0ef0c3fe4f9ef5a03d6fe6b11, type: 2}
+  - {fileID: 11400000, guid: d751e113607a72a4fbc113f8379f0d6f, type: 2}
+  - {fileID: 11400000, guid: e740d6f7f4bf4544b8efef7a8a62c667, type: 2}
   ConstantShakePresets: []
   StartConstantShakePreset: {fileID: 0}
   CurrentConstantShakePreset: {fileID: 0}

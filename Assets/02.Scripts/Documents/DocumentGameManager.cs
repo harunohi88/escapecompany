@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CreateMap;
 using UnityEngine;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 namespace DocumentGame
 {
@@ -171,6 +172,9 @@ namespace DocumentGame
                 Fever(score);
                 return;
             }
+
+            ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[2]);
+
             _totalScore += score * (_combo / 10 + 1);
             ++_correctCount;
             ++_combo;
@@ -193,6 +197,8 @@ namespace DocumentGame
                 return;
             }
 
+            ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[1]);
+
             if (type == DocumentType.Trash)
             {
                 ++_faultTrash;
@@ -208,6 +214,7 @@ namespace DocumentGame
 
         void Fever(int score)
         {
+            ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[3]);
             _totalScore += score * (_combo / 10 + 1); // magic number
             ++_combo;
             ++_correctCount;
