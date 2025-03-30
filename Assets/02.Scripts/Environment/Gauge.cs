@@ -13,7 +13,7 @@ namespace CreateMap
         public float CurrentTime;
         public bool IsActive { get; set; }
         bool _isActive = false;
-        
+
         // 미니게임을 성공하면 Reset
         public void Reset()
         {
@@ -24,10 +24,12 @@ namespace CreateMap
         void OnEnable()
         {
             DialogueManager.Instance.OnDialogueEnded += Activete;
+            UI_MiniGame1.Instance.ShowResultAction += StopGauge;
         }
         void OnDisable()
         {
             DialogueManager.Instance.OnDialogueEnded -= Activete;
+            UI_MiniGame1.Instance.ShowResultAction -= StopGauge;
         }
 
         void Start()
@@ -37,9 +39,9 @@ namespace CreateMap
         void Update()
         {
             if (!_isActive) return;
-            
+
             if (!IsActive) return;
-            
+
             CurrentTime += Time.deltaTime;
             Image.fillAmount = CurrentTime / MaxTime;
 

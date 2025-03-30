@@ -18,7 +18,21 @@ namespace DocumentGame
         public List<Document> DocumentPrefabList;
         public int DisplayDocumentCount;
         public List<DisplaySlot> DisplaySlot;
-        public string Stage = "LRLLRRRRLLLLRRLRRRLLLRRLRRRRLLLRLLLLLRRRRLRLLLRRLRLRRRL";
+        private readonly string[] _stages = new string[]
+        {
+            "LRLLRRRRLLLLRRLRLLLRRLLRLLLRRLLLRLRLRRRL",
+            "LRLLRRRLLLRRLLRLRRLLLRRLRLRLLRLLLRLLRRLL",
+            "RLLLRRRLLLRRLRLRRLLLRLLRLRLLRLRLLLRLRRRL",
+            "LLRRLRRRLLLRLLRRLLLRRLRRLLLRRRRLLRLRRLLR",
+            "RLLLRLLLRRRLLRLLLRRLLLRRRLLRLLLRRLRLRRRL",
+            "LLRRLLRRRRLLLRLRRLLLRRLLLRRLLLRRLRLRRLLR",
+            "LRLLRRRLLLRRLLRLRRLLLRRRLLLRRLLRRLRLRRLL",
+            "LRRLRLRLLRLRLRRLLRLRLRRLLRLRRLRRLLRLRLRR",
+            "RRLLRRLLRRLLRRLLRRLLRRLLRRLLRRLLRRLLRRLL",
+            "LRLRRLRRLLLRRLRLRLLLRLRLRLRLLLLRRLLLRLRL",
+            "RLLRLLRLLRLLRLLRLLRLLRLLRLLRLLRLLRLLRLLR",
+            "LLRRLLRRLLRRRLLRRLLRRLLRRLLRRLLRRLLRRLLR" 
+        };
         public int SuccessCount;
         readonly List<Document> _displayDocumentList = new List<Document>();
 
@@ -82,7 +96,7 @@ namespace DocumentGame
             Vector3 newPosition = new Vector3(Camera.transform.position.x, Camera.transform.position.y, transform.position.z);
             transform.parent.transform.position = newPosition;
             Gauge.StopGauge();
-            GenerateQueue(Stage);
+            GenerateQueue(_stages[Random.Range(0, _stages.Length)]);
             InitDisplay();
             GameStart();
         }
@@ -133,7 +147,6 @@ namespace DocumentGame
             _status = false;
             _fever = false;
             _feverTimer = 0;
-            Debug.Log("조이스틱 켜버리");
             MainPlayer.GetComponent<Player>().Stop();
             _documentQueue.Clear();
             _displayDocumentList.Clear();
@@ -154,16 +167,6 @@ namespace DocumentGame
                 Gauge.Reset();
                 MainPlayer.GetComponent<Player>().AddStunItemNum();
             }
-        }
-
-        void ShowResult()
-        {
-            Debug.Log($"Total Score : {_totalScore}");
-            Debug.Log($"Max Combo : {_maxCombo}");
-            Debug.Log($"Play Time : {_timer.ToString("F2")}");
-            Debug.Log($"����� �з��� ���� : {_correctCount}");
-            Debug.Log($"���ƹ��� 1�� ��� : {_faultImportant}");
-            Debug.Log($"�����ϰ� ������ ������ : {_faultTrash}");
         }
 
         public void Correct(int score)
