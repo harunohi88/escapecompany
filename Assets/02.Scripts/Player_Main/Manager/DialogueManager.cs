@@ -30,6 +30,8 @@ public class DialogueManager : MonoBehaviour
     {
         NextDialogue();
     }
+    
+    
     public void ActiveDialogueBox()
     {
         DialogueBox.SetActive(true);
@@ -54,6 +56,12 @@ public class DialogueManager : MonoBehaviour
             // 타이머
 
         }
+    }
+
+    public void ActiveButton()
+    {
+        DialogueBox.SetActive(false);
+        OnDialogueEnded?.Invoke();
     }
     
 }
