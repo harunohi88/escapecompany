@@ -2,6 +2,7 @@ using System.Collections;
 using Com.LuisPedroFonseca.ProCamera2D;
 using DocumentGame;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace CreateMap
 {
@@ -10,6 +11,7 @@ namespace CreateMap
         public Transform player; // 추적할 플레이어
         public float moveSpeed = 3f; // AI의 이동 속도
 
+        NavMeshAgent _agent;
 
         [Header("스턴효과")]
         public bool IsStun;
@@ -31,6 +33,11 @@ namespace CreateMap
             _rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _sr = GetComponent<SpriteRenderer>();
+            _agent = GetComponent<NavMeshAgent>();
+
+            _agent.updateRotation = false;
+            _agent.updateUpAxis = false;
+            
             _rb.isKinematic = false; // 물리적 상호작용을 받도록 설정
 
             _isActive = false;
@@ -51,14 +58,17 @@ namespace CreateMap
             if (!_isActive) return;
             
             if (!IsStun)
-                MoveTowardsPlayer();
+                // MoveTowardsPlayer();
+                _agent.SetDestination(player.position);
             else
             {
+                _agent.isStopped = true;
                 StunEffect.SetActive(true);
                 _animator.SetBool("Walk", false);
                 _currentStunTime += Time.deltaTime;
                 if (_currentStunTime >= StunTime)
                 {
+                    _agent.isStopped = false;
                     StunEffect.SetActive(false);
                     _currentStunTime = 0;
                     IsStun = false;
