@@ -37,7 +37,11 @@ namespace CreateMap
 
             _rb.isKinematic = false; // 물리적 상호작용을 받도록 설정
 
-            _isActive = false;
+            if (DialogueManager.Instance != null)
+            {
+                _isActive = false;
+            }
+
             Debug.Log("Boss 스크립트 시작됨!");
         }
 
