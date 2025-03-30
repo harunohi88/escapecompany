@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Com.LuisPedroFonseca.ProCamera2D;
 using CreateMap;
 using DG.Tweening;
 using TMPro;
@@ -144,7 +145,8 @@ namespace MiniGameTWo
                 {
                     Debug.Log("성공임");
                     GameOver(true);
-                } else
+                }
+                else
                 {
                     StartCoroutine(ResetBoard());
                 }
@@ -169,7 +171,8 @@ namespace MiniGameTWo
             {
                 Debug.Log("체력 02임");
                 GameOver(false);
-            } else
+            }
+            else
             {
                 _audioSource.Play();
                 StartCoroutine(ResetBoard());
@@ -211,7 +214,9 @@ namespace MiniGameTWo
         {
             isGameOver = true;
             ResetTimerEffects();
-    
+            ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[6]);
+            Handheld.Vibrate(); // 진동
+
             Debug.Log("Game Over");
             player.Stop();
             if (success)
@@ -219,7 +224,8 @@ namespace MiniGameTWo
                 Debug.Log("게임 클리어 처리");
                 player.AddStunItemNum();
                 Gauge.Reset();
-            } else
+            }
+            else
             {
                 Debug.Log("게임 실패 처리 - 게이지 시작!");
                 Gauge.StartGauge();
