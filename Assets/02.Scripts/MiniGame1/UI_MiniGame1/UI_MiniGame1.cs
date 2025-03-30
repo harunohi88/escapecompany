@@ -86,12 +86,12 @@ namespace DocumentGame
 
             // 한 줄씩 나타나는 효과
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(TotalScore.DOFade(1, 0.7f));
-            sequence.Append(MaxCombo.DOFade(1, 0.7f));
-            sequence.Append(PlayTime.DOFade(1, 0.7f));
-            sequence.Append(CorrectDocument.DOFade(1, 0.7f));
-            sequence.Append(FaultImportant.DOFade(1, 0.7f));
-            sequence.Append(FaultTrash.DOFade(1, 0.7f)).OnComplete(() => ActivateCloseButton());
+            sequence.Append(TotalScore.DOFade(1, 0.3f));
+            sequence.Append(MaxCombo.DOFade(1, 0.3f));
+            sequence.Append(PlayTime.DOFade(1, 0.3f));
+            sequence.Append(CorrectDocument.DOFade(1, 0.3f));
+            sequence.Append(FaultImportant.DOFade(1, 0.3f));
+            sequence.Append(FaultTrash.DOFade(1, 0.3f)).OnComplete(() => ActivateCloseButton());
         }
 
         public void HideResult()
