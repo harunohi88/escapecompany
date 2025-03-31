@@ -1,7 +1,6 @@
+using CreateMap;
 using DocumentGame;
 using UnityEngine;
-using CreateMap;
-using Unity.VisualScripting;
 public class PlayerGame : MonoBehaviour
 {
     // 목표: 플레이어가 미니게임 2를 플레이할 수 있도록 함
@@ -15,16 +14,21 @@ public class PlayerGame : MonoBehaviour
 
         if (other.gameObject.CompareTag("Boss"))
         {
-            if (DialogueManager.Instance == null) return;
-            if (DialogueManager.Instance.CurrentIndex == 5)
+            if (DialogueManager.Instance != null)
             {
-                DialogueManager.Instance.NextDialogue();
-            }
-            else
+                if (DialogueManager.Instance.CurrentIndex == 5)
+                {
+                    DialogueManager.Instance.NextDialogue();
+                } else
+                {
+                    EndingManager.Instance.GameOver();
+                }
+            } else
             {
                 EndingManager.Instance.GameOver();
             }
-            
+
+
         }
 
     }

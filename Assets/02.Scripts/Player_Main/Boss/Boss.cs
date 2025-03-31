@@ -19,9 +19,9 @@ namespace CreateMap
         public float StunTime;
         Animator _animator;
         float _currentStunTime;
+        bool _isActive;
         Rigidbody2D _rb;
         SpriteRenderer _sr;
-        bool _isActive = false;
 
 
         void Start()
@@ -30,6 +30,7 @@ namespace CreateMap
             _rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _sr = GetComponent<SpriteRenderer>();
+
             // _agent = GetComponent<NavMeshAgent>();
 
             _agent.updateRotation = false;
@@ -45,33 +46,6 @@ namespace CreateMap
             Debug.Log("Boss 스크립트 시작됨!");
         }
 
-        void OnEnable()
-        {
-            if (DialogueManager.Instance != null)
-            {
-                DialogueManager.Instance.OnDialogueEnded += StartBoss;
-                IsStun = false;
-            }
-            else
-            {
-                Debug.Log("_isActive를 true로 변경");
-                _isActive = true;
-                IsStun = false;
-            }
-        }
-
-        public void StartBoss()
-        {
-            Debug.Log("StartBoss 호출됨!");
-            _isActive = true;
-        }
-
-        void OnDisable()
-        {
-            if (DialogueManager.Instance == null) return;
-            // DialogueManager.Instance.OnDialogueEnded -= StartBoss;
-        }
-
         void Update()
         {
             Debug.Log($"Update() - _isActive: {_isActive}");
@@ -81,8 +55,7 @@ namespace CreateMap
             if (!IsStun)
             {
                 _agent.SetDestination(player.position);
-            }
-            else
+            } else
             {
                 _agent.isStopped = true;
                 StunEffect.SetActive(true);
@@ -98,6 +71,33 @@ namespace CreateMap
             }
         }
 
+        void OnEnable()
+        {
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.OnDialogueEnded += StartBoss;
+                IsStun = false;
+            } else
+            {
+                Debug.Log("_isActive를 true로 변경");
+                _isActive = true;
+                IsStun = false;
+            }
+        }
+
+        void OnDisable()
+        {
+            if (DialogueManager.Instance == null) return;
+
+            // DialogueManager.Instance.OnDialogueEnded -= StartBoss;
+        }
+
+        public void StartBoss()
+        {
+            Debug.Log("StartBoss 호출됨!");
+            _isActive = true;
+        }
+
 
         void MoveTowardsPlayer()
         {
@@ -110,8 +110,7 @@ namespace CreateMap
             if (direction.x < 0)
             {
                 _sr.flipX = true;
-            }
-            else
+            } else
             {
                 _sr.flipX = false;
             }
@@ -138,7 +137,7 @@ namespace CreateMap
             }
 
             if (DialogueManager.Instance == null) return;
-            if (DialogueManager.Instance.CurrentIndex == 6)
+            if (DialogueManager.Instance.CurrentIndex == 5)
             {
                 DialogueManager.Instance.NextDialogue();
                 StartCoroutine(Wait2Seconds());
