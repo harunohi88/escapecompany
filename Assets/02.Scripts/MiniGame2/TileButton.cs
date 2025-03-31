@@ -89,7 +89,6 @@ namespace MiniGameTWo
             {
                 //transform.DOKill();
                 ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[6]);
-                Handheld.Vibrate(); // 진동
                 _audioSource.PlayOneShot(FailSound, 0.4f);
                 transform.DOPunchScale(Vector3.one * 0.5f, 0.3f);
                 GameObject vfx2 = Instantiate(ButtonWrongVFX, transform.position, Quaternion.identity);
