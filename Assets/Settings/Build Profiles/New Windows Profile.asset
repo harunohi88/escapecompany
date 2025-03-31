@@ -24,8 +24,6 @@ MonoBehaviour:
     m_path: Assets/01.Scenes/Openning.unity
   - m_enabled: 1
     m_path: Assets/01.Scenes/MainCreateMap.unity
-  - m_enabled: 1
-    m_path: Assets/01.Scenes/MainReplayMap.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings:
