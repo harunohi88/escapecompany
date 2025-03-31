@@ -145,8 +145,7 @@ namespace MiniGameTWo
                 {
                     Debug.Log("성공임");
                     GameOver(true);
-                }
-                else
+                } else
                 {
                     StartCoroutine(ResetBoard());
                 }
@@ -171,8 +170,7 @@ namespace MiniGameTWo
             {
                 Debug.Log("체력 02임");
                 GameOver(false);
-            }
-            else
+            } else
             {
                 _audioSource.Play();
                 StartCoroutine(ResetBoard());
@@ -215,7 +213,9 @@ namespace MiniGameTWo
             isGameOver = true;
             ResetTimerEffects();
             ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[6]);
-            Handheld.Vibrate(); // 진동
+#if UNITY_ANDROID && !UNITY_EDITOR
+    Handheld.Vibrate();
+#endif
 
             Debug.Log("Game Over");
             player.Stop();
@@ -224,8 +224,7 @@ namespace MiniGameTWo
                 Debug.Log("게임 클리어 처리");
                 player.AddStunItemNum();
                 Gauge.Reset();
-            }
-            else
+            } else
             {
                 Debug.Log("게임 실패 처리 - 게이지 시작!");
                 Gauge.StartGauge();
