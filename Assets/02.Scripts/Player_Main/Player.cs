@@ -77,6 +77,7 @@ namespace CreateMap
 
         public void Stop()
         {
+            Debug.Log("Stop()");
             _animator.SetBool("Play", false);
             _isPlay = false;
             Joystick.gameObject.SetActive(true);
