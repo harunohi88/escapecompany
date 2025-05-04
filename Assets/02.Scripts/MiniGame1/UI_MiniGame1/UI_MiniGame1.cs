@@ -68,7 +68,7 @@ namespace DocumentGame
             InactivateCloseButton();
 
 
-            // ÃÊ±âÈ­
+            // ì´ˆê¸°í™”
             TotalScore.alpha = 0;
             MaxCombo.alpha = 0;
             PlayTime.alpha = 0;
@@ -76,15 +76,15 @@ namespace DocumentGame
             FaultImportant.alpha = 0;
             FaultTrash.alpha = 0;
 
-            // ÅØ½ºÆ® ¼³Á¤
-            TotalScore.text = $"ÃÖÁ¾ Á¡¼ö : {totalScore}";
-            MaxCombo.text = $"ÃÖ´ë ÄŞº¸ : {maxCombo}";
-            PlayTime.text = $"ÀÏÇÑ ½Ã°£ : {playTime:F2}";
-            CorrectDocument.text = $"ÈÇ¸¢ÇÑ ÀÏ Ã³¸® : {correctDocument}";
-            FaultImportant.text = $"°¥¾Æ¹ö¸° ¿µ¾÷ ºñ¹Ğ : {faultImportant}";
-            FaultTrash.text = $"¼ÒÁßÇÏ°Ô º¸°üÇÑ ¾²·¹±â : {faultTrash}";
+            // í…ìŠ¤íŠ¸ ì„¤ì •
+            TotalScore.text = $"ìµœì¢… ì ìˆ˜ : {totalScore}";
+            MaxCombo.text = $"ìµœëŒ€ ì½¤ë³´ : {maxCombo}";
+            PlayTime.text = $"ì¼í•œ ì‹œê°„ : {playTime:F2}";
+            CorrectDocument.text = $"í›Œë¥­í•œ ì¼ ì²˜ë¦¬ : {correctDocument}";
+            FaultImportant.text = $"ê°ˆì•„ë²„ë¦° ì˜ì—… ë¹„ë°€ : {faultImportant}";
+            FaultTrash.text = $"ì†Œì¤‘í•˜ê²Œ ë³´ê´€í•œ ì“°ë ˆê¸° : {faultTrash}";
 
-            // ÇÑ ÁÙ¾¿ ³ªÅ¸³ª´Â È¿°ú
+            // í•œ ì¤„ì”© ë‚˜íƒ€ë‚˜ëŠ” íš¨ê³¼
             Sequence sequence = DOTween.Sequence();
             sequence.Append(TotalScore.DOFade(1, 0.3f));
             sequence.Append(MaxCombo.DOFade(1, 0.3f));
