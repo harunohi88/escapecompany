@@ -34,6 +34,6 @@ public class GameManager : MonoBehaviour
 
     public void LoadReplayScene()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("MainReplayMap");
     }
 }
