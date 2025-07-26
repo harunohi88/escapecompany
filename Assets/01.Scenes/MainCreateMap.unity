@@ -1059,7 +1059,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\uCE90\uB9AD\uD130\uB97C \uC6C0\uC9C1\uC5EC \uCEF4\uD4E8\uD130 \uC55E\uC73C\uB85C
-    \uAC00\uC790!"
+    \uAC00\uC790!!!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b78f2ebbc90dd4341816878c819dc895, type: 2}
   m_sharedMaterial: {fileID: -1447566683968889411, guid: b78f2ebbc90dd4341816878c819dc895, type: 2}
