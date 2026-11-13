@@ -21,19 +21,28 @@ namespace CreateMap
 
         void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else if (Instance != this)
-            {
-                // Destroy(gameObject);
-            }
+            Instance = this;
+        }
+
+        void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
         }
 
         void Start()
         {
             NextDialogue();
+        }
+
+        // 튜토리얼이 끝났는지 (늦게 구독하는 쪽에서 확인용)
+        public bool HasEnded { get; private set; }
+
+        void EndDialogue()
+        {
+            DialogueBox.SetActive(false);
+            if (HasEnded) return; // 종료 이벤트는 한 번만
+            HasEnded = true;
+            OnDialogueEnded?.Invoke();
         }
 
 
@@ -54,19 +63,14 @@ namespace CreateMap
             }
             else
             {
-                DialogueBox.SetActive(false);
-                OnDialogueEnded?.Invoke();
-                // 보스 이동시작
-                // 미니게임 게이지
-                // 타이머
-
+                // 보스 이동시작, 미니게임 게이지, 타이머
+                EndDialogue();
             }
         }
 
         public void ActiveButton()
         {
-            DialogueBox.SetActive(false);
-            OnDialogueEnded?.Invoke();
+            EndDialogue();
         }
 
     }

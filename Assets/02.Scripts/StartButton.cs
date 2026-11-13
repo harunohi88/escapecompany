@@ -29,10 +29,12 @@ namespace DocumentGame
             EnterMiniGameTwo();
 
             if (DialogueManager.Instance == null) return;
-            if (DialogueManager.Instance.CurrentIndex != 1) return;
-            
+            // 컴퓨터 앞 트리거에서 이미 대사가 넘어가 CurrentIndex는 2.
+            // (기존 1 비교는 항상 실패해서 미니게임2 중에도 대사창이 떠 있었음)
+            // 다음 대사로 넘기는 건 GameTwoManager.GameOver(CurrentIndex == 2)에서 한다.
+            if (DialogueManager.Instance.CurrentIndex != 2) return;
+
             DialogueManager.Instance.DeActiveDialogueBox();
-            DialogueManager.Instance.NextDialogue();
         }
 
         void EnterMiniGameTwo()

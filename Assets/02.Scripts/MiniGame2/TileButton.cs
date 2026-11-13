@@ -72,6 +72,9 @@ namespace MiniGameTWo
 
         void OnClick()
         {
+            // 보드 교체 연출 중이거나 게임이 끝났으면 무시 (중복 ResetBoard로 타일이 32개 생기던 문제)
+            if (GameManager == null || !GameManager.CanClick) return;
+
             _btn.interactable = false;
             Color randomColor = Color.HSVToRGB(Random.Range(0f, 1f), 0.6f, 1f);
             _img.DOColor(randomColor, 0.3f);

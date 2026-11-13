@@ -46,10 +46,10 @@ namespace CreateMap
             {
                 _animator.SetBool("Walk", true);
 
-                // 좌우 반전 (오른쪽이 기본 방향)
+                // 좌우 반전 (오른쪽이 기본 방향). 위/아래로만 움직일 땐 방향 유지
                 if (_movement.x > 0)
                     transform.localScale = new Vector3(1, 1, 1);
-                else
+                else if (_movement.x < 0)
                     transform.localScale = new Vector3(-1, 1, 1);
             } else // 정지 상태
             {
@@ -71,6 +71,7 @@ namespace CreateMap
             {
                 _animator.SetBool("Play", true);
                 _isPlay = true;
+                _movement = Vector2.zero; // 미니게임 중 마지막 입력 방향으로 미끄러지지 않도록
                 Joystick.gameObject.SetActive(false);
             }
         }

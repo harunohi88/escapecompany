@@ -1,4 +1,3 @@
-using System;
 using DocumentGame;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
@@ -12,39 +11,55 @@ namespace CreateMap
         public float MaxTime;
         public float CurrentTime;
         public bool IsActive { get; set; }
-        bool _isActive = false;
+        bool _isActive = false; // 튜토리얼이 끝나야 true
 
-        // 미니게임을 성공하면 Reset
+        // 미니게임을 성공하면 Reset (게이지만 0으로, 진행/정지 상태는 호출한 쪽이 결정)
         public void Reset()
         {
             CurrentTime = 0;
             enabled = true;
-            IsActive = false;
+            if (Image != null) Image.fillAmount = 0;
         }
-        void OnEnable()
+
+        // 싱글톤 Awake 순서에 의존하지 않도록 구독은 Start에서 한 번만 한다.
+        void Start()
         {
-            if (DialogueManager.Instance != null)
+            DialogueManager dialogue = DialogueManager.Instance;
+            if (dialogue != null && !dialogue.HasEnded)
             {
-                DialogueManager.Instance.OnDialogueEnded += Activete;
-                DialogueManager.Instance.OnDialogueEnded += StartGauge;
-                UI_MiniGame1.Instance.ShowResultAction += StopGauge;
+                dialogue.OnDialogueEnded += OnDialogueEnded;
             }
             else
             {
-                Activete();
-                StartGauge();
+                OnDialogueEnded();
             }
-            
-        
+
+            if (UI_MiniGame1.Instance != null)
+            {
+                // 미니게임1 결과창이 떠 있는 동안 멈추고, 닫으면 재개
+                UI_MiniGame1.Instance.ShowResultAction += StopGauge;
+                UI_MiniGame1.Instance.OnCloseButtonClicked += StartGauge;
+            }
         }
-        void OnDisable()
+
+        void OnDestroy()
         {
-            if (DialogueManager.Instance == null) return;
-            DialogueManager.Instance.OnDialogueEnded -= Activete;
-            DialogueManager.Instance.OnDialogueEnded -= StartGauge;
-            UI_MiniGame1.Instance.ShowResultAction -= StopGauge;
+            if (DialogueManager.Instance != null)
+                DialogueManager.Instance.OnDialogueEnded -= OnDialogueEnded;
+
+            if (UI_MiniGame1.Instance != null)
+            {
+                UI_MiniGame1.Instance.ShowResultAction -= StopGauge;
+                UI_MiniGame1.Instance.OnCloseButtonClicked -= StartGauge;
+            }
         }
-        
+
+        void OnDialogueEnded()
+        {
+            Activete();
+            StartGauge();
+        }
+
         void Update()
         {
             if (!_isActive) return;
@@ -56,6 +71,7 @@ namespace CreateMap
 
             if (CurrentTime >= MaxTime)
             {
+                IsActive = false;
                 EndingManager.Instance.GameOver();
                 Debug.Log("게임오버");
             }
@@ -69,11 +85,9 @@ namespace CreateMap
         public void StopGauge()
         {
             IsActive = false;
-            UI_MiniGame1.Instance.OnCloseButtonClicked += StartGauge;
         }
         public void StartGauge()
         {
-            Debug.Log("게이지 재시작!!!!!!!!");
             IsActive = true;
             enabled = true;
         }

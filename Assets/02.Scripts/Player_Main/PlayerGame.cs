@@ -10,25 +10,19 @@ public class PlayerGame : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log(other.gameObject.tag);
-
         if (other.gameObject.CompareTag("Boss"))
         {
-            if (DialogueManager.Instance != null)
+            if (DialogueManager.Instance != null && DialogueManager.Instance.CurrentIndex == 5)
             {
-                if (DialogueManager.Instance.CurrentIndex == 5)
-                {
-                    DialogueManager.Instance.NextDialogue();
-                } else
-                {
-                    EndingManager.Instance.GameOver();
-                }
-            } else
-            {
-                EndingManager.Instance.GameOver();
+                DialogueManager.Instance.NextDialogue();
+                return;
             }
 
+            // 튜토리얼 중 아직 움직이지 않는 부장에 부딪혀서 게임오버되지 않도록
+            Boss boss = other.gameObject.GetComponentInParent<Boss>();
+            if (boss != null && !boss.IsActive) return;
 
+            EndingManager.Instance.GameOver();
         }
 
     }
@@ -54,7 +48,6 @@ public class PlayerGame : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("충돌 끝");
         StartButton.MiniGame1 = false;
         StartButton.MiniGame2 = false;
     }

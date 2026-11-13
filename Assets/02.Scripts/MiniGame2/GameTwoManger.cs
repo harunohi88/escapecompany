@@ -38,18 +38,25 @@ namespace MiniGameTWo
         int redCount;
         int successCount;
         float timer;
+        bool isResetting; // 보드 교체 연출 중에는 클릭/타이머 무시
+
+        void Awake()
+        {
+            // 루트가 꺼져 있다가 SetActive(true) 직후 InitGame이 호출되면 Start보다 먼저 실행되므로 Awake에서 저장
+            _originalPos = TimerText.transform.localPosition;
+            timer = GameTime;
+        }
 
         void Start()
         {
-            player = GameObject.Find("Player").GetComponent<Player>();
-            _originalPos = TimerText.transform.localPosition;
-            timer = GameTime;
+            if (player == null) player = GameObject.Find("Player").GetComponent<Player>();
         }
 
         void Update()
         {
             if (!isGameStart) return;
             if (isGameOver) return;
+            if (isResetting) return;
 
             timer -= Time.deltaTime;
             TimerText.text = $"{Mathf.Ceil(timer)}";
@@ -72,9 +79,12 @@ namespace MiniGameTWo
             if (isGameStart) return;
             isGameStart = true;
 
-            DOTween.KillAll(); // 모든 tween 초기화 (중복 방지)
+            // DOTween.KillAll()은 다른 UI(BeatEffect 등)의 무한 트윈까지 죽이므로 미니게임2 것만 정리
+            StopAllCoroutines();
+            ClearTilesAndVFX();
             enabled = true;
             isGameOver = false;
+            isResetting = false;
             currentHealth = 3;
             successCount = 0;
             timer = GameTime;
@@ -128,9 +138,11 @@ namespace MiniGameTWo
             VFXs.Clear();
         }
 
+        public bool CanClick => isGameStart && !isGameOver && !isResetting;
+
         public void RedCleared()
         {
-            if (isGameOver) return;
+            if (!CanClick) return;
 
             redCount--;
             if (redCount <= 0)
@@ -154,7 +166,7 @@ namespace MiniGameTWo
 
         public void OnwrongClick()
         {
-            if (isGameOver) return;
+            if (!CanClick) return;
 
             if (currentHealth <= 0)
             {
@@ -179,6 +191,7 @@ namespace MiniGameTWo
 
         IEnumerator ResetBoard()
         {
+            isResetting = true;
             ResetTimerEffects();
 
             foreach (Transform tile in UIMiniTwo.GridParent)
@@ -192,6 +205,7 @@ namespace MiniGameTWo
 
             yield return new WaitForSeconds(0.2f);
             StartNewRound();
+            isResetting = false;
         }
 
         void StartNewRound()
@@ -211,6 +225,8 @@ namespace MiniGameTWo
         void GameOver(bool success)
         {
             isGameOver = true;
+            StopAllCoroutines(); // 진행 중인 ResetBoard가 게임 종료 후 새 타일을 만들지 않도록
+            isResetting = false;
             ResetTimerEffects();
             ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[6]);
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -224,6 +240,7 @@ namespace MiniGameTWo
                 Debug.Log("게임 클리어 처리");
                 player.AddStunItemNum();
                 Gauge.Reset();
+                Gauge.StartGauge(); // 0부터 다시 차오르게 (이전엔 멈춘 채로 남음)
             } else
             {
                 Debug.Log("게임 실패 처리 - 게이지 시작!");
@@ -236,7 +253,7 @@ namespace MiniGameTWo
             enabled = false;
             isGameStart = false;
 
-            if (DialogueManager.Instance.CurrentIndex == 2)
+            if (DialogueManager.Instance != null && DialogueManager.Instance.CurrentIndex == 2)
             {
                 DialogueManager.Instance.ActiveDialogueBox();
                 DialogueManager.Instance.NextDialogue();
@@ -247,12 +264,13 @@ namespace MiniGameTWo
         {
             foreach (Transform tile in UIMiniTwo.GridParent)
             {
+                tile.DOKill(); // 무한 루프 트윈이 파괴된 오브젝트를 붙잡지 않도록
                 Destroy(tile.gameObject);
             }
 
             foreach (GameObject vfx in VFXs)
             {
-                Destroy(vfx);
+                if (vfx != null) Destroy(vfx);
             }
             UnRegisterVFX();
         }

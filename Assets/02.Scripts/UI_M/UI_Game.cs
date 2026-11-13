@@ -11,13 +11,39 @@ namespace CreateMap
 
         float _second;
         bool pause;
+        bool _started; // 튜토리얼이 끝나야 시계가 흐름
 
         public int Hour { get; private set; } = 5;
         public int Minute { get; private set; } = 50;
         void Start()
         {
             UpdateTimerText();
+
+            // 구독은 한 번만 (기존엔 결과창이 뜰 때마다 ResumeTimer를 다시 등록해 누적됐음)
             UI_MiniGame1.Instance.ShowResultAction += PauseTimer;
+            UI_MiniGame1.Instance.OnCloseButtonClicked += ResumeTimer;
+
+            DialogueManager dialogue = DialogueManager.Instance;
+            if (dialogue != null && !dialogue.HasEnded)
+                dialogue.OnDialogueEnded += StartTimer;
+            else
+                StartTimer();
+        }
+
+        void OnDestroy()
+        {
+            if (UI_MiniGame1.Instance != null)
+            {
+                UI_MiniGame1.Instance.ShowResultAction -= PauseTimer;
+                UI_MiniGame1.Instance.OnCloseButtonClicked -= ResumeTimer;
+            }
+            if (DialogueManager.Instance != null)
+                DialogueManager.Instance.OnDialogueEnded -= StartTimer;
+        }
+
+        void StartTimer()
+        {
+            _started = true;
         }
 
         void Update()
@@ -28,6 +54,7 @@ namespace CreateMap
 
         void UpdateTimer()
         {
+            if (!_started) return;
             if (pause) return;
 
             _second += Time.deltaTime;
@@ -57,7 +84,6 @@ namespace CreateMap
         public void PauseTimer()
         {
             pause = true;
-            UI_MiniGame1.Instance.OnCloseButtonClicked += ResumeTimer;
         }
 
         public void ResumeTimer()

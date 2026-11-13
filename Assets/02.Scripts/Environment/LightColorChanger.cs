@@ -11,28 +11,30 @@ namespace CreateMap
 
         bool isActive = false;
 
-        void OnEnable()
+        // 싱글톤 Awake 순서에 의존하지 않도록 Start에서 구독
+        void Start()
         {
-            if (DialogueManager.Instance != null)
+            DialogueManager dialogue = DialogueManager.Instance;
+            if (dialogue != null && !dialogue.HasEnded)
             {
-                DialogueManager.Instance.OnDialogueEnded += Activate;
+                dialogue.OnDialogueEnded += Activate;
             }
             else
             {
                 isActive = true;
             }
-            
         }
 
-        void OnDisable()
+        void OnDestroy()
         {
             if (DialogueManager.Instance == null) return;
             DialogueManager.Instance.OnDialogueEnded -= Activate;
         }
+
         void Update()
         {
             if (!isActive) return;
-            
+
             if (gameTime == null || sceneLight == null)
                 return;
 

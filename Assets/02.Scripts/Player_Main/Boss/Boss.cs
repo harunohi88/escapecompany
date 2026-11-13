@@ -38,23 +38,31 @@ namespace CreateMap
 
             _rb.isKinematic = false; // 물리적 상호작용을 받도록 설정
 
-            if (DialogueManager.Instance != null)
+            IsStun = false;
+
+            // 튜토리얼이 있으면 끝난 뒤에 추격 시작 (Awake 순서에 의존하지 않도록 Start에서 판단)
+            DialogueManager dialogue = DialogueManager.Instance;
+            if (dialogue != null && !dialogue.HasEnded)
             {
                 _isActive = false;
+                dialogue.OnDialogueEnded += StartBoss;
             }
-
-            Debug.Log("Boss 스크립트 시작됨!");
+            else
+            {
+                _isActive = true;
+            }
         }
+
+        public bool IsActive => _isActive;
 
         void Update()
         {
-            Debug.Log($"Update() - _isActive: {_isActive}");
-            Debug.Log($"Update() - IsStun: {IsStun}");
             if (!_isActive) return;
 
             if (!IsStun)
             {
                 _agent.SetDestination(player.position);
+                UpdateWalkVisual();
             } else
             {
                 _agent.isStopped = true;
@@ -71,54 +79,26 @@ namespace CreateMap
             }
         }
 
-        void OnEnable()
+        void OnDestroy()
         {
             if (DialogueManager.Instance != null)
-            {
-                DialogueManager.Instance.OnDialogueEnded += StartBoss;
-                IsStun = false;
-            } else
-            {
-                Debug.Log("_isActive를 true로 변경");
-                _isActive = true;
-                IsStun = false;
-            }
-        }
-
-        void OnDisable()
-        {
-            if (DialogueManager.Instance == null) return;
-
-            // DialogueManager.Instance.OnDialogueEnded -= StartBoss;
+                DialogueManager.Instance.OnDialogueEnded -= StartBoss;
         }
 
         public void StartBoss()
         {
-            Debug.Log("StartBoss 호출됨!");
             _isActive = true;
         }
 
-
-        void MoveTowardsPlayer()
+        // NavMeshAgent 이동 방향에 맞춰 걷기 애니메이션/좌우 반전 (기존 MoveTowardsPlayer는 호출되지 않아 항상 정지 모션이었음)
+        void UpdateWalkVisual()
         {
-            // 플레이어의 위치로 목표 설정
-            Vector3 targetPosition = player.position;
+            Vector3 velocity = _agent.velocity;
+            bool walking = velocity.sqrMagnitude > 0.01f;
+            _animator.SetBool("Walk", walking);
 
-            // 타일맵에 맞춰 AI가 이동
-            Vector3 direction = (targetPosition - transform.position).normalized;
-
-            if (direction.x < 0)
-            {
-                _sr.flipX = true;
-            } else
-            {
-                _sr.flipX = false;
-            }
-
-            // 충돌을 피하면서 이동
-            _rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
-            _animator.SetBool("Walk", true);
-
+            if (velocity.x < -0.05f) _sr.flipX = true;
+            else if (velocity.x > 0.05f) _sr.flipX = false;
         }
 
         public void Stun()

@@ -149,9 +149,7 @@ namespace DocumentGame
             _fever = false;
             _feverTimer = 0;
             MainPlayer.GetComponent<Player>().Stop();
-            _documentQueue.Clear();
-            _displayDocumentList.Clear();
-            _documentQueue.Clear();
+            ClearDocuments();
             UI_MiniGame1.Instance.InactivateCombo();
             UI_MiniGame1.Instance.InactivateFever();
 
@@ -160,6 +158,21 @@ namespace DocumentGame
             {
                 DialogueManager.Instance.ActiveDialogueBox();
             }
+        }
+
+        // 화면에 남은 문서와 대기열의 (비활성) 문서 오브젝트를 파괴. 리스트만 비우면 화면에 남고 매 판 40개씩 쌓였음
+        void ClearDocuments()
+        {
+            foreach (Document document in _displayDocumentList)
+            {
+                if (document != null) Destroy(document.gameObject);
+            }
+            foreach (Document document in _documentQueue)
+            {
+                if (document != null) Destroy(document.gameObject);
+            }
+            _displayDocumentList.Clear();
+            _documentQueue.Clear();
         }
 
         public void IsSuccess()

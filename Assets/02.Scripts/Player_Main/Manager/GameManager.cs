@@ -9,14 +9,14 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // 싱글톤 유지
-        } else if (Instance != this)
-        {
-            Destroy(gameObject); // 기존 인스턴스가 있다면 삭제
-        }
+        // 씬마다 GameManager가 있고, 엔딩의 다시하기 버튼이 그 씬의 GameManager를 직접 참조한다.
+        // DontDestroyOnLoad로 이전 씬 것을 남기면 새 씬의 GameManager가 파괴되어 버튼이 끊기므로 씬 단위로 둔다.
+        Instance = this;
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
 
     void Start()

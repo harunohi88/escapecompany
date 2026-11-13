@@ -7,18 +7,20 @@ public class EndingManager : MonoBehaviour
 
     bool isEnd;
 
+    public bool IsEnd => isEnd;
+
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // 싱글톤 유지
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject); // 기존 인스턴스가 있다면 삭제
-        }
+        // 엔딩 UI는 씬마다 따로 있으므로 씬을 넘어 유지하지 않는다.
+        // (DontDestroyOnLoad로 유지하면 다시하기 후 isEnd가 true로 남고 EndingUI 참조가 끊겨 엔딩이 안 뜸)
+        Instance = this;
     }
+
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
     public void GameOver()
     {
         // Time.timeScale = 0;
