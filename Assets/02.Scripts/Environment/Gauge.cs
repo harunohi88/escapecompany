@@ -33,25 +33,13 @@ namespace CreateMap
             {
                 OnDialogueEnded();
             }
-
-            if (UI_MiniGame1.Instance != null)
-            {
-                // 미니게임1 결과창이 떠 있는 동안 멈추고, 닫으면 재개
-                UI_MiniGame1.Instance.ShowResultAction += StopGauge;
-                UI_MiniGame1.Instance.OnCloseButtonClicked += StartGauge;
-            }
+            // 멈춤/재개는 각 미니게임 매니저가 자기 게이지만 직접 제어한다 (플레이 중인 게임의 게이지만 멈춤)
         }
 
         void OnDestroy()
         {
             if (DialogueManager.Instance != null)
                 DialogueManager.Instance.OnDialogueEnded -= OnDialogueEnded;
-
-            if (UI_MiniGame1.Instance != null)
-            {
-                UI_MiniGame1.Instance.ShowResultAction -= StopGauge;
-                UI_MiniGame1.Instance.OnCloseButtonClicked -= StartGauge;
-            }
         }
 
         void OnDialogueEnded()

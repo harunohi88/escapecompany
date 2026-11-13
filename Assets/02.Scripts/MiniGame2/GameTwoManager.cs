@@ -39,6 +39,10 @@ namespace MiniGameTWo
         int successCount;
         float timer;
         bool isResetting; // 보드 교체 연출 중에는 클릭/타이머 무시
+        bool isSuspended; // 도망치느라 중단한 상태 (하트·라운드·타일·남은 시간 유지)
+
+        public bool IsPlaying => isGameStart && !isSuspended;
+        public bool IsSuspended => isSuspended;
 
         void Awake()
         {
@@ -57,6 +61,7 @@ namespace MiniGameTWo
             if (!isGameStart) return;
             if (isGameOver) return;
             if (isResetting) return;
+            if (isSuspended) return;
 
             timer -= Time.deltaTime;
             TimerText.text = $"{Mathf.Ceil(timer)}";
@@ -73,8 +78,36 @@ namespace MiniGameTWo
             }
         }
 
+        // 도망: 보드와 진행 상황은 그대로 두고 화면만 숨긴다. 이 미니게임의 게이지는 다시 찬다
+        public void Suspend()
+        {
+            if (!isGameStart || isGameOver || isSuspended) return;
+            isSuspended = true;
+
+            UIPrefab.SetActive(false);
+            Gauge.StartGauge();
+            player.Stop();
+        }
+
+        void Resume()
+        {
+            isSuspended = false;
+
+            UIPrefab.SetActive(true);
+            Gauge.StopGauge();
+            // UI를 껐다 켜면 하트 애니메이터가 초기 상태로 돌아가므로 남은 하트/성공 표시를 다시 맞춘다
+            ResetHearts();
+            ResetGoals();
+        }
+
+        // 새 판을 시작하거나, 중단했던 판이 있으면 이어서 한다
         public void InitGame()
         {
+            if (isSuspended)
+            {
+                Resume();
+                return;
+            }
             if (isGameStart) return;
             isGameStart = true;
 
@@ -137,7 +170,7 @@ namespace MiniGameTWo
             VFXs.Clear();
         }
 
-        public bool CanClick => isGameStart && !isGameOver && !isResetting;
+        public bool CanClick => isGameStart && !isGameOver && !isResetting && !isSuspended;
 
         public void RedCleared()
         {
@@ -223,6 +256,7 @@ namespace MiniGameTWo
             isGameOver = true;
             StopAllCoroutines(); // 진행 중인 ResetBoard가 게임 종료 후 새 타일을 만들지 않도록
             isResetting = false;
+            isSuspended = false;
             ResetTimerEffects();
             ProCamera2DShake.Instance.Shake(ProCamera2DShake.Instance.ShakePresets[6]);
 #if UNITY_ANDROID && !UNITY_EDITOR

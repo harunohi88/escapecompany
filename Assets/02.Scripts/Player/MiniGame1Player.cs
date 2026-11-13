@@ -56,6 +56,9 @@ namespace DocumentGame
 
         private void HandleFingerTap(LeanFinger finger)
         {
+            // 도망 버튼 등 UI 위에서 시작한 터치는 문서 분류로 치지 않는다
+            if (finger.StartedOverGui) return;
+
             if (!_fever || _current == null)
             {
                 return;
@@ -73,6 +76,8 @@ namespace DocumentGame
 
         private void HandleFingerSwipe(LeanFinger finger)
         {
+            if (finger.StartedOverGui) return;
+
             if (_current == null)
             {
                 return;
@@ -96,8 +101,30 @@ namespace DocumentGame
         public void GameStart()
         {
             _current = null;
+            _direction = Vector3.zero;
             _status = true;
             _fever = false;
+            Shredder.SetActive(true);
+            Safe.SetActive(true);
+        }
+
+        // 도망: 입력을 멈추고 파쇄기/금고를 숨긴다
+        public void Suspend()
+        {
+            _current = null;
+            _direction = Vector3.zero;
+            _status = false;
+            Shredder.SetActive(false);
+            Safe.SetActive(false);
+        }
+
+        // 이어하기: 피버 상태도 그대로 복원
+        public void Resume(bool fever)
+        {
+            _current = null;
+            _direction = Vector3.zero;
+            _status = true;
+            _fever = fever;
             Shredder.SetActive(true);
             Safe.SetActive(true);
         }

@@ -87,18 +87,85 @@ namespace DocumentGame
             }
         }
 
-        public void NewGame()
+        bool _suspended; // 도망치느라 중단한 상태 (진행 상황 유지)
+
+        public bool IsPlaying => _status;
+        public bool IsSuspended => _suspended;
+
+        void Start()
+        {
+            // 결과창을 닫으면 이 미니게임의 게이지만 다시 찬다 (다른 미니게임 게이지는 건드리지 않음)
+            UI_MiniGame1.Instance.OnCloseButtonClicked += OnResultClosed;
+        }
+
+        void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
+            if (UI_MiniGame1.Instance != null)
+                UI_MiniGame1.Instance.OnCloseButtonClicked -= OnResultClosed;
+        }
+
+        void OnResultClosed()
+        {
+            Gauge.StartGauge();
+        }
+
+        // 새 판을 시작하거나, 중단했던 판이 있으면 이어서 한다. 시작/재개했으면 true
+        public bool NewGame()
         {
             if (_status)
             {
-                return;
+                return false;
             }
             Vector3 newPosition = new Vector3(Camera.transform.position.x, Camera.transform.position.y, transform.position.z);
             transform.parent.transform.position = newPosition;
             Gauge.StopGauge();
+
+            if (_suspended)
+            {
+                Resume();
+                return true;
+            }
+
             GenerateQueue(_stages[Random.Range(0, _stages.Length)]);
             InitDisplay();
             GameStart();
+            return true;
+        }
+
+        // 도망: 남은 문서·점수·콤보·시간·피버를 그대로 두고 화면만 치운다. 이 미니게임의 게이지는 다시 찬다
+        public void Suspend()
+        {
+            if (!_status)
+            {
+                return;
+            }
+            _status = false;
+            _suspended = true;
+
+            Player.Suspend();
+            foreach (Document document in _displayDocumentList)
+            {
+                if (document != null) document.gameObject.SetActive(false);
+            }
+            UI_MiniGame1.Instance.InactivateCombo();
+            UI_MiniGame1.Instance.InactivateFever();
+
+            Gauge.StartGauge();
+            MainPlayer.GetComponent<Player>().Stop();
+        }
+
+        void Resume()
+        {
+            _suspended = false;
+            _status = true;
+
+            RefreshDisplay();
+            UI_MiniGame1.Instance.ActivateCombo();
+            UI_MiniGame1.Instance.RefreshComboText(_combo);
+            if (_fever) UI_MiniGame1.Instance.ActivateFever();
+
+            Player.Resume(_fever);
         }
 
         public void InitDisplay()
@@ -132,6 +199,7 @@ namespace DocumentGame
 
         public void GameOver()
         {
+            _suspended = false;
             Player.GameOver();
             IsSuccess();
             _maxCombo = Mathf.Max(_maxCombo, _combo);

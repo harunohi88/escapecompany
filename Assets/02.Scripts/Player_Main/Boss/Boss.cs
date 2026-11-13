@@ -106,7 +106,8 @@ namespace CreateMap
             Player _player = player.GetComponent<Player>();
             StartButton startButton = player.GetComponent<PlayerGame>().StartButton;
 
-            if (startButton.IsAnyGame()) return;
+            // 미니게임을 실제로 하는 중에만 막는다 (도망친 뒤 미니게임 자리에서도 기절시킬 수 있게)
+            if (startButton.IsPlayingGame()) return;
             if (_player.StunItem > 0)
             {
                 _player.UseStunItem();
