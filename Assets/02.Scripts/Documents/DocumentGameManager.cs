@@ -78,7 +78,6 @@ namespace DocumentGame
                 _feverTimer += Time.deltaTime;
                 if (_feverTimer >= FeverTime)
                 {
-                    Debug.Log("Fever Time End!!");
                     Player.FeverEnd();
                     UI_MiniGame1.Instance.InactivateFever();
                     _fever = false;
@@ -153,8 +152,8 @@ namespace DocumentGame
             UI_MiniGame1.Instance.InactivateCombo();
             UI_MiniGame1.Instance.InactivateFever();
 
-            if (DialogueManager.Instance == null) return;
-            if (DialogueManager.Instance.CurrentIndex == 5)
+            // 튜토리얼: 미니게임1을 마치면 미리 넣어 둔 '부장 기절' 안내를 보여 준다
+            if (DialogueManager.IsStep(TutorialStep.StunBoss))
             {
                 DialogueManager.Instance.ActiveDialogueBox();
             }
@@ -201,7 +200,6 @@ namespace DocumentGame
             ++_feverGauge;
             if (_feverGauge >= FeverCount) // magic number
             {
-                Debug.Log("Fever Time!!");
                 UI_MiniGame1.Instance.ActivateFever();
                 _fever = true;
                 Player.Fever();

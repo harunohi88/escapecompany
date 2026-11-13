@@ -16,7 +16,6 @@ namespace MiniGameTWo
 
             for (int i = 0; i < 16; i++)
             {
-                Debug.Log("InitGame");
                 GameObject tile = Instantiate(TilePrefab, GridParent);
                 TileButton tileBtn = tile.GetComponent<TileButton>();
 

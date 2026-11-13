@@ -18,7 +18,7 @@ namespace DocumentGame
             }
         }
 
-        void Update()
+        protected override void Update()
         {
             lerpSpeed = 0.3f * _excuteCount;
 

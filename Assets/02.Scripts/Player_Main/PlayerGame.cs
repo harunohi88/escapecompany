@@ -12,7 +12,7 @@ public class PlayerGame : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Boss"))
         {
-            if (DialogueManager.Instance != null && DialogueManager.Instance.CurrentIndex == 5)
+            if (DialogueManager.IsStep(TutorialStep.StunBoss))
             {
                 DialogueManager.Instance.NextDialogue();
                 return;
@@ -28,22 +28,15 @@ public class PlayerGame : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("GameTwo"))
+        // 튜토리얼: 목적지에 도착하면 "노란 버튼을 눌러..." 대사로 진행
+        if (other.gameObject.CompareTag("GameTwo") && DialogueManager.IsStep(TutorialStep.GoToComputer))
         {
-            if (DialogueManager.Instance == null) return;
-            if (DialogueManager.Instance.CurrentIndex == 1)
-            {
-                DialogueManager.Instance.NextDialogue();
-            }
+            DialogueManager.Instance.NextDialogue();
         }
 
-        if (other.gameObject.CompareTag("GameOne"))
+        if (other.gameObject.CompareTag("GameOne") && DialogueManager.IsStep(TutorialStep.GoToBox))
         {
-            if (DialogueManager.Instance == null) return;
-            if (DialogueManager.Instance.CurrentIndex == 3)
-            {
-                DialogueManager.Instance.NextDialogue();
-            }
+            DialogueManager.Instance.NextDialogue();
         }
     }
     void OnTriggerExit2D(Collider2D other)

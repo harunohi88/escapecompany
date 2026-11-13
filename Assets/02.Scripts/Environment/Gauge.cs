@@ -73,7 +73,6 @@ namespace CreateMap
             {
                 IsActive = false;
                 EndingManager.Instance.GameOver();
-                Debug.Log("게임오버");
             }
         }
 

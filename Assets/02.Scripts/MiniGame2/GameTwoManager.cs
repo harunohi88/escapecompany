@@ -69,7 +69,6 @@ namespace MiniGameTWo
 
             if (timer <= 0)
             {
-                Debug.Log("Timmer 0");
                 GameOver(false);
             }
         }
@@ -155,7 +154,6 @@ namespace MiniGameTWo
 
                 if (successCount >= maxSuccess)
                 {
-                    Debug.Log("성공임");
                     GameOver(true);
                 } else
                 {
@@ -170,7 +168,6 @@ namespace MiniGameTWo
 
             if (currentHealth <= 0)
             {
-                Debug.Log("체력 0임");
                 GameOver(false);
                 return;
             }
@@ -180,7 +177,6 @@ namespace MiniGameTWo
 
             if (currentHealth <= 0)
             {
-                Debug.Log("체력 02임");
                 GameOver(false);
             } else
             {
@@ -233,17 +229,14 @@ namespace MiniGameTWo
     Handheld.Vibrate();
 #endif
 
-            Debug.Log("Game Over");
             player.Stop();
             if (success)
             {
-                Debug.Log("게임 클리어 처리");
                 player.AddStunItemNum();
                 Gauge.Reset();
                 Gauge.StartGauge(); // 0부터 다시 차오르게 (이전엔 멈춘 채로 남음)
             } else
             {
-                Debug.Log("게임 실패 처리 - 게이지 시작!");
                 Gauge.StartGauge();
             }
 
@@ -253,7 +246,8 @@ namespace MiniGameTWo
             enabled = false;
             isGameStart = false;
 
-            if (DialogueManager.Instance != null && DialogueManager.Instance.CurrentIndex == 2)
+            // 튜토리얼: 미니게임2를 마치면 "잘했어!! 다음은 박스 앞으로" 대사로 진행
+            if (DialogueManager.IsStep(TutorialStep.PlayMiniGame2))
             {
                 DialogueManager.Instance.ActiveDialogueBox();
                 DialogueManager.Instance.NextDialogue();

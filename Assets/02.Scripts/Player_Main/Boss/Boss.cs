@@ -116,8 +116,8 @@ namespace CreateMap
                 IsStun = true;
             }
 
-            if (DialogueManager.Instance == null) return;
-            if (DialogueManager.Instance.CurrentIndex == 5)
+            // 튜토리얼: 기절 버튼을 눌러 보면 "6시까지 버텨봐!"를 2초 보여 준 뒤 튜토리얼 종료
+            if (DialogueManager.IsStep(TutorialStep.StunBoss))
             {
                 DialogueManager.Instance.NextDialogue();
                 StartCoroutine(Wait2Seconds());
@@ -127,7 +127,7 @@ namespace CreateMap
         IEnumerator Wait2Seconds()
         {
             yield return new WaitForSeconds(2f);
-            DialogueManager.Instance.NextDialogue();
+            if (DialogueManager.Instance != null) DialogueManager.Instance.NextDialogue();
         }
     }
 }

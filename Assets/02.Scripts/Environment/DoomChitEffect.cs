@@ -18,7 +18,7 @@ namespace CreateMap
             originalRotation = transform.rotation;
         }
 
-        protected void Update()
+        protected virtual void Update()
         {
             timer += Time.deltaTime * lerpSpeed;
             float t = Mathf.PingPong(timer, 1); // 0~1 반복

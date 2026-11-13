@@ -3,7 +3,7 @@
     public class DoomChitEffectMiniGame : DoomChitEffect
     {
         public Gauge target;
-        void Update()
+        protected override void Update()
         {
             lerpSpeed = target.GetPercent() * 3f;
             base.Update();

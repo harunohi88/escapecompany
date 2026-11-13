@@ -43,8 +43,6 @@ namespace DocumentGame
                 return;
             }
 
-            //GetKeycode();
-
             if (_direction == Vector3.zero)
             {
                 return;
@@ -92,18 +90,6 @@ namespace DocumentGame
                 {
                     _direction = _safe;
                 }
-            }
-        }
-
-        private void GetKeycode()
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                _direction = Vector3.left;
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                _direction = Vector3.right;
             }
         }
 
