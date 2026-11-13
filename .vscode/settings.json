@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "escapecompany.sln"
+    "dotnet.defaultSolution": "escapecompany.slnx"
 }
