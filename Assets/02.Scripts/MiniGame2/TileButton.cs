@@ -65,6 +65,13 @@ namespace MiniGameTWo
             //transform.DORotate(new Vector3(0, 0, 10f), 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
         }
 
+        // 타일이 파괴될 때(보드 교체·씬 전환) 남은 트윈을 정리해 DOTween 'target destroyed' 경고를 막는다
+        void OnDestroy()
+        {
+            transform.DOKill();
+            if (_img != null) _img.DOKill();
+        }
+
         public void HandleButtonClick()
         {
             OnClick();

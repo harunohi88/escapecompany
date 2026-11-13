@@ -21,7 +21,8 @@ namespace DocumentGame
         // 미니게임 캔버스가 위에 그려지므로 미니게임2 타일(아래 끝 y≈-521)과 겹치지 않게 둔다
         public Vector2 FleeButtonPosition = new Vector2(-300f, -680f);
         public float FleeButtonScale = 0.6f;
-        public Color FleeButtonColor = new Color(0.55f, 0.8f, 1f);
+        // 노란 시작 버튼 이미지에 곱해지는 색 (노랑 x 이 색 = 초록 계열)
+        public Color FleeButtonColor = new Color(0.45f, 1f, 0.45f);
         public string FleeButtonText = "도망!";
 
         enum ActiveGame
